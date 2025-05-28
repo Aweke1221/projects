@@ -1,0 +1,327 @@
+/* General Styles (as before - keep your existing styles) */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  color: #1e1e1e;
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+/* Navbar Styles (as before) */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+.navbar {
+  display: flex;
+  background: linear-gradient(135deg, #2979ff, #64b5f6);
+  color: white;
+  padding: 1.3em 2.5em;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3.button:hover {
+    background-color: #ccc;
+}
+
+body.dark-mode .button:hover {
+    background-color: #555;
+}
+
+.operator {
+    background-color: #673ab7;
+    color: white;
+}
+
+.operator:hover {
+    background-color: #7e57c2;
+}
+
+.clear {
+    background-color: #e53935;
+    color: white;
+}
+
+.clear:hover {
+    background-color: #d32f2f;
+}
+
+.equal {
+    background-color: #388e3c;
+    color: white;
+}
+
+.equal:hover {
+    background-color: #43a047;
+}
+
+/* Solar System (as before) */
+.solar-system-container {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    margin: 20px auto;
+}
+
+.sun {
+    width: 80px;
+    height: 80px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px #ffc107;
+    z-index: 1;
+}
+
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed #ccc;
+    animation: orbit 20s linear infinite;
+    transform-origin: 200px 200px;
+}
+
+.planet-inner {
+    width: 30px;
+    height: 30px;
+    background-color: #1e88e5;
+    border-radius: 50%;
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    z-index: 2;
+}
+
+.planet2 {
+    animation-delay: 5s;
+    animation-duration: 25s;
+    transform-origin: 200px 200px;
+}
+
+.planet2-inner {
+    width: 20px;
+    height: 20px;
+    background-color: #f44336;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    z-index: 2;
+}
+
+.moon {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #aaa;
+    border-radius: 50%;
+    animation: moonOrbit 5s linear infinite;
+    transform-origin: 15px 15px;
+    left: 15px;
+    top: -5px;
+    z-index: 3;
+}
+
+@keyframes orbit {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes moonOrbit {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Spin Wheel Styles (as before) */
+#spinContainer {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+#wheel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: conic-gradient(red, yellow, green, cyan, blue, magenta, red);
+    transition: transform 5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#spinButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid black;
+    cursor: pointer;
+    z-index: 1;
+}
+
+#spinResult {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Advanced CSS Section Styles (as before) */
+.advanced-css-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.advanced-css-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Media Queries (as before) */
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+    }
+
+    .menu-toggle,
+    .close-toggle {
+        display: block;
+    }
+
+    .navbar {
+        padding: 1em;
+    }
+
+    .section {
+        padding: 30px;
+        margin: 20px;
+        margin-top: 70px;
+    }
+
+    .section h2 {
+        font-size: 2em;
+    }
+
+    .solar-system-container {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section {
+        display: block;
+        padding: 20px;
+        margin: 15px;
+        margin-top: 60px;
+    }
+
+    .section h2 {
+        font-size: 1.75em;
+    }
+
+    .section p {
+        font-size: 1.1em;
+    }
+
+    .solar-system-container {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+/* Styling for the interactive examples (as before) */
+.example-container {
+    margin-bottom: 20px;
+}
+
+.run-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.example-code {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+}
+
+.example-output {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+/* Style for "Show Code" button */
+.show-code-button {
+    background-color: #607d8b;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.show-code-button:hover {
+    background-color: #78909c;
+}
+
+/* Style for code display area (initially hidden) */
+.code-display-area {
+    width: 100%;
+    background-color: #333;
+    color: #f0f0f0;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: none;
+    overflow-x: auto;
+    font-family: monospace;
+    white-space: pre;
+}
+
+.code-display-area.show {
+    display: block;
+}

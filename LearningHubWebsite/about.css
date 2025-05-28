@@ -1,0 +1,112 @@
+/* General Styles for the About Me Section */
+#main .container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 30px; /* Increased padding for more spacing */
+}
+
+#main h1 {
+    color: #e8491d;
+    font-size: 2.5em; /* Larger heading */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#main p {
+    font-size: 1.1em; /* Slightly larger text for better readability */
+    line-height: 1.7; /* Improved line spacing */
+    margin-bottom: 25px; /* More space between paragraphs */
+    color: #555;        /* Slightly darker text for better contrast */
+}
+
+.skills-section {
+    margin-top: 40px; /* Increased spacing above the skills section */
+}
+
+.skills-section h2 {
+    color: #333;
+    font-size: 1.8em; /* Larger skills heading */
+    margin-bottom: 15px;
+}
+
+.skills-list {
+    list-style: disc;
+    margin-left: 30px; /* Increased indent for the list */
+}
+
+.skills-list li {
+    margin-bottom: 12px; /* Increased spacing between list items */
+    font-size: 1.05em;  /* Slightly larger list item text */
+}
+
+.skills-list strong {
+    font-weight: 600;   /* Slightly bolder skill names */
+    color: #222;       /* Darker skill name color */
+}
+
+.reveal-link {
+    color: #e8491d;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 20px; /* Increased spacing below the link */
+    text-align: center;   /* Center the link */
+    font-size: 1.2em;    /* Larger link text */
+    transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+.reveal-link:hover {
+    color: #c0392b; /* Darker red on hover */
+}
+
+/* About Me Image Styling (General) */
+.about-me-image {
+    max-width: 250px;       /* Increased image size */
+    height: auto;
+    border-radius: 10px;   /* Slightly rounded corners */
+    margin-bottom: 25px;       /* More space below the image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+}/* General Styles (as before) */
+#main .container { /* ... */ }
+#main h1 { /* ... */ }
+#main p { /* ... */ }
+.skills-section { /* ... */ }
+.skills-section h2 { /* ... */ }
+.skills-list { /* ... */ }
+.skills-list li { /* ... */ }
+.skills-list strong { /* ... */ }
+.reveal-link { /* ... */ }
+.reveal-link:hover { /* ... */ }
+.about-me-image { /* ... */ }
+
+/* Initially Hide the About Me Details */
+#about-me-details {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+    margin-top: -20px;
+}
+
+/* Style when the About Me Details is Targeted */
+#about-me-details:target {
+    display: block;
+    opacity: 1;
+    margin-top: 0;
+}
+
+.hide-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #e8491d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hide-link:hover {
+  color: #c0392b;
+}

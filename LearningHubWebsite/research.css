@@ -1,0 +1,177 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f8;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+#research {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+#research h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Two-Column Layout for Research Section */
+.dive-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Dive Column */
+.dive-column {
+}
+
+.dive-column h3 {
+    color: #34495e;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Dive Block */
+.dive-block {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.dive-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Dive Title */
+.dive-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #3498db;
+    margin: 10px;
+    text-align: center;
+}
+
+/* Image Thumbnail */
+.dive-image-thumbnail {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    display: block;
+}
+
+.dive-image-thumbnail:hover {
+    opacity: 0.8;
+}
+
+/* Dive Details */
+.dive-details {
+    padding: 0;  /* Removed all padding */
+    background-color: #fff;
+    border-top: 2px solid #eee;
+    display: grid; /* Use grid for two-column layout (image & description) */
+    grid-template-columns: 1fr 1fr;
+    gap: 0; /* Removed the gap */
+    align-items: start;
+}
+
+.dive-details.hidden {
+    display: none;
+}
+
+/* Full Image */
+.dive-image-full {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Adjust to your needs */
+    border-radius: 0;  /* Remove border radius */
+    box-shadow: none;  /* Remove shadow */
+     margin: 0;  /* Remove margin */
+}
+
+/* Dive Description */
+.dive-description {
+    padding: 0; /* Remove padding  */
+}
+
+.dive-description p,
+.dive-description ul {
+    column-count: 2;
+    column-gap: 10px; /* Adjust gap as needed */
+    margin: 0; /* Remove margin */
+    padding: 10px; /* Added padding */
+    box-sizing: border-box;
+}
+
+.dive-description p {
+    color: #555;
+    margin-bottom: 0; /* Removed bottom margin */
+}
+
+.dive-description ul {
+    list-style: square;
+    padding-left: 20px;
+    color: #777;
+}
+
+.dive-description ul li {
+    margin-bottom: 5px;
+}
+
+/* Read More Link */
+.read-more {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.read-more:hover {
+    background-color: #2980b9;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .dive-grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .dive-description p,
+    .dive-description ul {
+        column-count: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    #research {
+        padding: 15px;
+    }
+
+    .dive-details {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,116 @@
+/* CSS for Footer */
+.bg-dark {
+    background-color: #343a40 !important;
+}
+
+.text-white {
+    color: #fff !important;
+}
+
+.py-4 {
+    padding-top: 1.5rem !important; /* Increased padding */
+    padding-bottom: 1.5rem !important; /* Increased padding */
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1200px; /* Increased max width */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .col-md-4 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 1.5rem; /* Increased spacing between columns */
+    }
+
+    .text-center.text-md-start {
+        text-align: center !important;
+    }
+
+    .text-center.text-md-end {
+        text-align: center !important;
+    }
+}
+
+.text-muted {
+    color: #adb5bd !important;
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+.text-muted:hover {
+    color: #fff !important; /* Change color on hover */
+}
+
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+
+/* Style the links */
+.list-unstyled li a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+/* Hover effect for links */
+.list-unstyled li a:hover {
+    color: #fff;
+}
+
+/* Style the hr */
+hr.text-muted {
+    border-color: #6c757d;
+    margin-top: 2rem;  /*added space around hr */
+    margin-bottom: 2rem;
+}
+
+/* Style the copyright text */
+.text-center.text-muted {
+    color: #6c757d !important;
+    font-size: 0.9rem; /* Smaller copyright text */
+}
+
+/* Font Awesome icon size */
+.fab {
+    font-size: 1.5rem;
+    transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+/* Social media icon hover effect */
+.fab:hover {
+    color: #fff;
+}
+
+/* "About Me" button styling */
+.btn-outline-light {
+    color: #fff;
+    border-color: #fff;
+    transition: all 0.3s ease; /* Smooth transition for hover */
+}
+
+.btn-outline-light:hover {
+    background-color: #fff;
+    color: #343a40;
+    border-color: #fff;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+/* Added for better spacing */
+.col-md-4 h5 {
+    margin-bottom: 1rem;
+}

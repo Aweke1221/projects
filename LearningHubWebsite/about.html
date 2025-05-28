@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: 3px solid #e8491d;
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        header ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        header li {
+            float: left;
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+
+        header #branding {
+            float: left;
+        }
+
+        header #branding h1 {
+            margin: 0;
+        }
+
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+
+        header .highlight, header .current a {
+            color: #e8491d;
+            font-weight: bold;
+        }
+
+        header a:hover {
+            color: #cccccc;
+            font-weight: bold;
+        }
+
+
+        #main {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #main h1 {
+            color: #e8491d;
+        }
+
+        #main p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .skills-section {
+            margin-top: 30px;
+        }
+
+        .skills-section h2 {
+            color: #333;
+        }
+
+        .skills-list {
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+        .skills-list li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">My</span> Portfolio</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current"><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="main">
+        <div class="container">
+            <h1>About Me</h1>
+            <p>
+                I'm a passionate and versatile developer with a strong foundation in web development, graphics design, and system design. I thrive on tackling challenging projects and crafting elegant, user-friendly solutions. My experience spans a wide range of technologies, allowing me to adapt quickly to new environments and deliver high-quality results.
+            </p>
+
+            <p>
+               I believe in continuous learning and staying up-to-date with the latest industry trends. I'm always eager to explore new tools and techniques to enhance my skills and create innovative solutions. I am dedicated to providing user-centric and effective applications.
+            </p>
+
+            <div class="skills-section">
+                <h2>Skills</h2>
+                <ul class="skills-list">
+                    <li><strong>Web Development:</strong> HTML, CSS, JavaScript, Node.js, React</li>
+                    <li><strong>Graphics Design:</strong> UI/UX Design, Adobe Creative Suite (Photoshop, Illustrator, InDesign)</li>
+                    <li><strong>System Design:</strong> Database Design, Architecture Planning, Cloud Technologies</li>
+                    <li><strong>Programming Languages:</strong> Java, C++</li>
+                    <li><strong>Other:</strong>  RESTful APIs, Version Control (Git), Agile Development</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

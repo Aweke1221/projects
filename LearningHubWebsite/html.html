@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Key Concepts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #343a40;
+            --text-color: #212529;
+            --background-color: #f8f9fa;
+            --light-background-color: #ffffff;
+            --code-background-color: #e9ecef;
+            --sidebar-width: 250px;
+            --transition-duration: 0.3s;
+            --box-shadow-color: rgba(0, 0, 0, 0.1);
+            --hover-box-shadow-color: rgba(0, 0, 0, 0.2);
+            --menu-button-size: 40px;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --border-radius: 5px;
+            --menu-icon-size: 24px;
+        }
+
+        /* Dark Theme Variables */
+        :root[data-theme="dark"] {
+            --text-color: #ffffff;
+            --background-color: #121212;
+            --light-background-color: #212121;
+            --code-background-color: #333;
+            --secondary-color: #424242;
+        }
+
+        /* General Styles */
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color var(--transition-duration), color var(--transition-duration);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            transition: width var(--transition-duration) ease, transform var(--transition-duration) ease;
+            transform: translateX(-100%);
+            box-shadow: 2px 0 5px var(--box-shadow-color);
+            padding-top: 60px;
+        }
+
+        .sidebar.active {
+            width: var(--sidebar-width);
+            transform: translateX(0);
+        }
+
+        .sidebar h2 {
+            padding: 20px;
+            margin: 0;
+            font-size: 1.5rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            transition: background-color var(--transition-duration) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .sidebar li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Submenu Styles */
+        .sidebar ul li ul {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .sidebar ul li.active>ul {
+            display: block;
+        }
+
+        .sidebar ul li ul li a {
+            font-size: 0.9rem;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+            transition: margin-left var(--transition-duration) ease, background-color var(--transition-duration), color var(--transition-duration);
+            background-color: var(--light-background-color);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px var(--box-shadow-color);
+            margin-top: 20px;
+        }
+
+        .main-content.active {
+            margin-left: var(--sidebar-width);
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+            font-size: 2rem;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .definition {
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: var(--background-color);
+            border-left: 5px solid var(--primary-color);
+            border-radius: var(--border-radius);
+        }
+
+        /* Code Editor Styles */
+        .code-editor-container {
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px var(--box-shadow-color);
+            background-color: var(--code-background-color);
+        }
+
+        .code-editor {
+            width: 100%;
+            min-height: 200px;
+            padding: 10px;
+            font-family: monospace;
+            border: none;
+            border-radius: var(--border-radius);
+            box-sizing: border-box;
+            resize: vertical;
+            outline: none;
+            background-color: var(--code-background-color);
+            color: var(--text-color);
+        }
+
+        .code-editor-buttons {
+            padding: 10px;
+            text-align: right;
+        }
+
+        .code-editor-buttons button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color var(--transition-duration) ease;
+        }
+
+        .code-editor-buttons button:hover {
+            background-color: darken(var(--primary-color), 10%);
+        }
+
+        .output {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            background-color: var(--light-background-color);
+            margin-top: 10px;
+            white-space: pre-wrap;
+            color: var(--text-color);
+        }
+
+        /* Menu Button Styles */
+        .menu-drive-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: var(--menu-button-size);
+            height: var(--menu-button-size);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color var(--transition-duration) ease;
+        }
+
+        .menu-drive-button:hover {
+            background-color: darken(var(--primary-color), 10%);
+        }
+
+        .menu-drive-button i {
+            font-size: var(--menu-icon-size);
+        }
+
+        /* Theme Toggle Styles */
+        .theme-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 12;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle label {
+            color: var(--text-color);
+            margin-right: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                height: auto;
+                position: static;
+                padding-top: 10px;
+                transform: translateX(0);
+            }
+
+            .sidebar.active {
+                width: 100%;
+                max-height: 300px;
+                overflow-y: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+                margin-top: 1px;
+            }
+
+            .main-content.active {
+                margin-left: 0;
+            }
+
+            .menu-drive-button {
+                position: fixed;
+                top: 10px;
+                left: 10px;
+            }
+
+            .theme-toggle {
+                position: fixed;
+                top: auto;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+        .learn{
+          color: white;
+          left: 50px;
+          align-items: center;
+          background-color: blue;
+          align-items: center;
+          height:50px;
+          padding-top: 5px;
+          margin-left: 100px;
+          margin-bottom: 100px;
+          left: 50%;
+          bottom: 100px;
+          align-items: center;
+          border-radius: 10px;
+          font-size: 2rem;
+          padding: 20px;
+          padding-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="menu-drive-button" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <label for="light-theme">Light</label>
+        <input type="radio" id="light-theme" name="theme" value="light" onclick="setTheme('light')" checked>
+        <label for="dark-theme">Dark</label>
+        <input type="radio" id="dark-theme" name="theme" value="dark" onclick="setTheme('dark')">
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <h2>HTML Concepts</h2>
+        <ul>
+            <a href="techno.html" id="learn" ><button class="learn">Return Back</button></a>
+            <li data-section="declaration">
+                <a href="#declaration">Declaration</a>
+            </li>
+            <li data-section="structure">
+                <a href="#structure">Structure</a>
+            </li>
+            <li class="has-submenu" data-section="tags">
+                <a href="#tags">Tags</a>
+                <ul>
+                    <li><a href="#opening-tags">Opening Tags</a></li>
+                    <li><a href="#closing-tags">Closing Tags</a></li>
+                    <li><a href="#self-closing-tags">Self-Closing Tags</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu" data-section="attributes">
+                <a href="#attributes">Attributes</a>
+                <ul>
+                    <li><a href="#global-attributes">Global Attributes</a></li>
+                    <li><a href="#element-specific-attributes">Element-Specific Attributes</a></li>
+                    <li><a href="#attribute-syntax">Attribute Syntax</a></li>
+                </ul>
+            </li>
+            <li data-section="semantic-elements">
+                <a href="#semantic-elements">Semantic Elements</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <h1 id="topic-title">Welcome to HTML Concepts</h1>
+
+        <div id="content">
+            
+            <p>
+                HTML, or **HyperText Markup Language**, is a standardized system used to structure and present content on the web. 
+                It consists of elements (tags) that define the structure of text, images, links, and multimedia. 
+                These tags help browsers understand and display web pages properly. 
+                It's the foundation of all websites and serves as the backbone for web development.
+                Explore the fundamental concepts of HTML. Click on the links in the sidebar to learn more.</p>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const listItems = document.querySelectorAll('.sidebar > ul > li');
+        const menuDriveButton = document.querySelector('.menu-drive-button');
+        const body = document.body;
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('active');
+        }
+
+        function loadContent(topicId) {
+            let content = '';
+            let title = '';
+            let codeEditor = '';
+
+            switch (topicId) {
+                case 'declaration':
+                    title = 'Declaration';
+                    content = `
+                        <div class="definition">
+                            <p>The HTML declaration (<code><!DOCTYPE html></code>) tells the browser that this is an HTML5 document. It's the very first thing in your HTML file.</p>
+                            <p>It triggers "standards mode" in the browser, ensuring consistent rendering.</p>
+                            <p>It is NOT an HTML tag.</p>
+                            <p>Without it, browsers might use "quirks mode," which can lead to unpredictable behavior.</p>
+                            <p>The declaration is case-insensitive, but best practice is to use uppercase.</p>
+                            <p>It has no closing tag.</p>
+                        </div>
+                    `;
+                    codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+
+                case 'structure':
+                    title = 'Structure';
+                    content = `
+                        <div class="definition">
+                            <p>A basic HTML document has the following structure:</p>
+                            <pre>
+<code>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Content goes here -->
+</body>
+</html>
+</code>
+                            </pre>
+                            <ul>
+                                <li><code><!DOCTYPE html></code>: The document type declaration.</li>
+                                <li><code><html></code>: The root element. Contains the entire HTML document. The <code>lang</code> attribute specifies the language of the document.</li>
+                                <li><code><head></code>: Contains metadata (information about the document).
+                                    <ul>
+                                        <li><code><meta></code>: Specifies character set (UTF-8 is common), viewport settings for responsiveness, and other metadata.</li>
+                                        <li><code><title></code>: Sets the title that appears in the browser tab.</li>
+                                        <li><code><link></code>: Links external resources like CSS stylesheets.</li>
+                                    </ul>
+                                </li>
+                                <li><code><body></code>: Contains the visible page content.  All the content that users see is within the <code>body</code> tags.</li>
+                            </ul>
+                            <p>A well-structured HTML document is essential for accessibility, SEO, and maintainability.</p>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <p>This is a paragraph.</p>
+</body>
+</html>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'tags':
+                    title = 'Tags';
+                    content = `
+                        <div class="definition">
+                            <p>HTML tags are keywords enclosed in angle brackets (<code><</code> and <code>></code>) that define how the browser will format and display the content.</p>
+                            <p>Tags are used to create HTML elements, which are the building blocks of web pages.</p>
+                            <p>There are different types of tags, including:</p>
+                            <ul>
+                                <li>Opening tags: Mark the beginning of an element (e.g., <code><p></code>)</li>
+                                <li>Closing tags: Mark the end of an element (e.g., <code></p></code>)</li>
+                                <li>Self-closing tags: Do not need a closing tag (e.g., <code><br/></code>)</li>
+                            </ul>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<p>This is a paragraph.</p>
+<br/>
+<img src="image.jpg" alt="Image">
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'opening-tags':
+                    title = 'Opening Tags';
+                    content = `
+                        <div class="definition">
+                            <p>Opening tags mark the beginning of an element.  For example, <code><p></code> marks the beginning of a paragraph.</p>
+                            <p>Opening tags are essential for defining the structure and content of your HTML document.</p>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<p>This is a paragraph.</p>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'closing-tags':
+                    title = 'Closing Tags';
+                    content = `
+                        <div class="definition">
+                            <p>Closing tags mark the end of an element. They are the same as the opening tag, but with a forward slash before the element name. For example, <code></p></code> marks the end of a paragraph.</p>
+                            <p>It's crucial to properly close your tags to avoid unexpected rendering issues.</p>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<p>This is a paragraph.</p>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'self-closing-tags':
+                    title = 'Self-Closing Tags';
+                    content = `
+                        <div class="definition">
+                            <p>Some HTML elements do not need a closing tag. These are called self-closing tags. For example, <code><br/></code> is a line break, and <code><img src="image.jpg"/></code> is an image.</p>
+                            <p>Self-closing tags are often used for elements that do not contain any content.</p>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<br/>
+<img src="image.jpg" alt="Image">
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'attributes':
+                    title = 'Attributes';
+                    content = `
+                        <div class="definition">
+                            <p>HTML attributes provide additional information about HTML elements. They are specified in the opening tag.</p>
+                            <p>Attributes can be used to control the appearance, behavior, and functionality of HTML elements.</p>
+                            <p>There are different types of attributes, including:</p>
+                            <ul>
+                                <li>Global attributes: Can be used on any HTML element (e.g., <code>class</code>, <code>id</code>, <code>style</code>)</li>
+                                <li>Element-specific attributes: Specific to certain HTML elements (e.g., <code>src</code> for <code><img></code>, <code>href</code> for <code><a></code>)</li>
+                            </ul>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<a href="https://www.example.com">Link to Example</a>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                    case 'attribute-syntax':
+                    title = 'Attribute Syntax';
+                    content = `
+                        <div class="definition">
+                            <p>Attributes are defined within the opening tag. They have a name and a value, separated by an equals sign (=). The attribute value is enclosed in double quotes ("").</p>
+                            <pre><element attribute="value"></pre>
+                            <p>Example:</p>
+                            <pre><a href="https://www.example.com">Link to Example</a></pre>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<a href="https://www.example.com">Link to Example</a>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'global-attributes':
+                    title = 'Global Attributes';
+                    content = `
+                        <div class="definition">
+                            <p>Global attributes are attributes that can be used on any HTML element. Examples include:</p>
+                            <ul>
+                                <li><code>class</code>: Specifies one or more class names for an element.</li>
+                                <li><code>id</code>: Specifies a unique id for an element.</li>
+                                <li><code>style</code>: Specifies an inline CSS style for an element.</li>
+                                <li><code>title</code>: Specifies extra information about an element (displayed as a tooltip).</li>
+                            </ul>
+                            <p>Global attributes provide a way to add common functionality and styling to all HTML elements.</p>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<p class="my-class" id="my-paragraph" title="This is a paragraph">This is a paragraph.</p>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'element-specific-attributes':
+                    title = 'Element-Specific Attributes';
+                    content = `
+                        <div class="definition">
+                            <p>Element-specific attributes are attributes that are specific to certain HTML elements. For example:</p>
+                            <ul>
+                                <li><code>src</code>: Specifies the URL of an image for the <code><img></code> element.</li>
+                                <li><code>href</code>: Specifies the URL of a link for the <code><a></code> element.</li>
+                                <li><code>alt</code>: Specifies alternative text for an image for the <code><img></code> element.</li>
+                            </ul>
+                            <p>Element-specific attributes provide a way to customize the behavior and appearance of individual HTML elements.</p>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<img src="image.jpg" alt="Image">
+<a href="https://www.example.com">Link to Example</a>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                case 'semantic-elements':
+                    title = 'Semantic Elements';
+                    content = `
+                        <div class="definition">
+                            <p>Semantic HTML elements provide meaning to the structure of your web page rather than just presentation. They make the HTML more understandable and accessible.</p>
+                            <p>Examples:</p>
+                            <ul>
+                                <li><code><article></code>: Represents a self-contained composition in a document, page, application, or site.</li>
+                                <li><code><aside></code>: Represents a portion of a document whose content is only indirectly related to the document's main content.</li>
+                                <li><code><nav></code>: Represents a section of a page that links to other pages or to parts within the page.</li>
+                                <li><code><header></code>: Represents introductory content, typically a group of introductory or navigational aids.</li>
+                                <li><code><footer></code>: Represents a footer for a document or section.</li>
+                            </ul>
+                            <p>Using semantic elements improves the accessibility and SEO of your web pages.</p>
+                        </div>
+                    `;
+                     codeEditor = `
+                        <div class="code-editor-container">
+                            <textarea class="code-editor" id="codeEditor">
+<article>
+  <h2>Article Title</h2>
+  <p>Article content goes here.</p>
+</article>
+                            </textarea>
+                            <div class="code-editor-buttons">
+                                <button onclick="runCode()">Run</button>
+                            </div>
+                            <div class="output" id="output"></div>
+                        </div>
+                    `;
+                    break;
+                default:
+                    title = 'Welcome to HTML Concepts';
+                    content = '<p>Explore the fundamental concepts of HTML. Click on the links in the sidebar to learn more.</p>';
+            }
+
+            document.getElementById('topic-title').innerText = title;
+            document.getElementById('content').innerHTML = content + codeEditor;
+        }
+
+        listItems.forEach(item => {
+            item.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                // Handle Submenu Activation
+                if(item.classList.contains('has-submenu')){
+                    item.classList.toggle('active');
+                } else {
+                    //For non-submenu items:
+
+                // Remove active class from all list items
+                    listItems.forEach(li => li.classList.remove('active'));
+
+                // Add active class to the clicked list item
+                item.classList.add('active');
+                }
+
+                const target = event.target;
+                let topicId = null;
+
+                if (target.tagName === 'A') {
+                     topicId = target.getAttribute('href').substring(1); // Remove '#'
+                }
+                // Load content
+                if(topicId) {
+                    loadContent(topicId);
+                }
+            });
+        });
+
+        function runCode() {
+            const code = document.getElementById('codeEditor').value;
+            const output = document.getElementById('output');
+            try {
+                output.innerHTML = code;  //Basic display.  More robust solutions exist
+            } catch (e) {
+                output.innerHTML = `<p class="error">Error: ${e.message}</p>`;
+            }
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme); // Store theme preference
+
+            // Update radio button checked state
+            document.getElementById(theme + '-theme').checked = true;
+        }
+
+        // Check for saved theme preference on page load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        }
+
+        // Initialize
+        loadContent('');
+
+    </script>
+
+</body>
+
+</html>

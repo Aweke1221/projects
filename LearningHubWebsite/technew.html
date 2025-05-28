@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Tech Universe</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #f0f0f0;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Navbar Container (Fixed) */
+        .navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            background: #333;
+            color: white;
+            padding: 1.3em 2.5em;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Navbar Links (Desktop) */
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.9em 1.5em;
+            font-weight: 500;
+            border-radius: 35px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background: #555;
+            color: #fff;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.7em;
+            padding: 0.6em;
+            border: none;
+            background: none;
+        }
+
+        /* Mobile Menu Close Button */
+        .close-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 2.2em;
+            position: absolute;
+            top: 0.7em;
+            right: 1.3em;
+            padding: 0.3em;
+            border: none;
+            background: none;
+        }
+
+        /* Mobile Navbar Links */
+        .navbar-links-mobile {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #333;
+            padding: 2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            transform: translateX(-100%);
+            z-index: 99;
+        }
+
+        .navbar-links-mobile.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .navbar-links-mobile a {
+            padding: 1.1em;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.15);
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-links-mobile a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Section Styling */
+        .section {
+            display: none;
+            padding: 50px;
+            background: #1e1e1e;
+            margin: 30px;
+            border-radius: 15px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.22);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:nth-child(even) {
+            background-color: #272727;
+        }
+
+        .section h2 {
+            color: #a5d6a7;
+            border-bottom: 3px solid #81c784;
+            padding-bottom: 0.8em;
+            margin-bottom: 2.5em;
+            font-size: 2.5em;
+        }
+
+        .section p {
+            margin-bottom: 1.4em;
+            font-size: 1.2em;
+        }
+
+        .section ul {
+            list-style-type: disc;
+            padding-left: 30px;
+        }
+
+        .section li {
+            padding: 12px 0;
+            border-bottom: 1px solid #424242;
+            font-size: 1.1em;
+        }
+
+        .section li:last-child {
+            border-bottom: none;
+        }
+
+
+        /* Button Styling */
+        .custom-button {
+            background-color: #81c784;
+            color: #121212;
+            padding: 14px 22px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin: 12px;
+            display: inline-block;
+        }
+
+        .custom-button:hover {
+            background-color: #a5d6a7;
+        }
+
+        .custom-button:active {
+            transform: scale(0.97);
+        }
+
+        /* Code Snippet Styling */
+        .code-snippet {
+            background-color: #272727;
+            border: 1px solid #424242;
+            padding: 18px;
+            border-radius: 10px;
+            font-family: 'Consolas', monospace;
+            overflow-x: auto;
+            margin-bottom: 2em;
+            line-height: 1.4;
+        }
+
+        .code-snippet pre {
+            margin: 0;
+        }
+
+        .code-snippet code {
+            color: #a5d6a7;
+            display: block;
+            padding: 0.3em;
+        }
+
+        /* Display Area Styling */
+        .display-area {
+            border: 2px solid #424242;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 10px;
+            background-color: #272727;
+            font-size: 1.15em;
+            overflow-wrap: break-word;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Image Styling */
+        .section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .section img:hover {
+            transform: scale(1.03);
+        }
+
+        /* Progress Bar Styling */
+        .progress-bar-container {
+            width: 100%;
+            background-color: #333;
+            border-radius: 12px;
+            margin-top: 20px;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #81c784;
+            width: 0;
+            border-radius: 12px;
+            transition: width 0.8s ease;
+            text-align: center;
+            color: #121212;
+            font-size: 0.9em;
+            line-height: 20px;
+        }
+
+        /* Keyframe Animation for Section */
+        @keyframes slideInFromBottom {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section.slide-in {
+            animation: slideInFromBottom 0.7s ease;
+        }
+
+        /* Section Background Effects */
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.05) 100%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+
+        .section:hover::before {
+            opacity: 1;
+        }
+
+        /* Solar System Styling */
+        .solar-system-container {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .sun {
+            width: 80px;
+            height: 80px;
+            background-color: #ffc107;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px #ffc107;
+            z-index: 1;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed #ccc;
+            animation: orbit 20s linear infinite;
+            transform-origin: 200px 200px;
+        }
+
+        .planet-inner {
+            width: 30px;
+            height: 30px;
+            background-color: #1e88e5;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            z-index: 2;
+        }
+
+        .planet2 {
+            animation-delay: 5s;
+            animation-duration: 25s;
+            transform-origin: 200px 200px;
+        }
+
+        .planet2-inner {
+            width: 20px;
+            height: 20px;
+            background-color: #f44336;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            z-index: 2;
+        }
+
+        .moon {
+           position: absolute;
+           width: 10px;
+           height: 10px;
+           background-color: #aaa;
+           border-radius: 50%;
+           animation: moonOrbit 5s linear infinite;
+           transform-origin: 15px 15px;
+           left: 15px;
+           top: -5px;
+           z-index: 3;
+        }
+
+        @keyframes orbit {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes moonOrbit {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Pulse Animation (for the About Section) */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .about-pulse {
+            animation: pulse 2s infinite; /* Apply the pulse animation */
+        }
+
+        /*  Rotate animation for the about message*/
+        .rotate-message {
+            animation: rotateText 15s linear infinite;
+        }
+
+        @keyframes rotateText {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Glow effect on the HTML section */
+        .html-glow {
+            box-shadow: 0 0 20px rgba(139, 195, 74, 0.5); /* Use a green glow */
+        }
+
+        /*  Shake animation for JavaScript Section  */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .js-shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .navbar-links {
+                display: none;
+            }
+
+            .close-toggle {
+                display: block;
+            }
+
+            .section {
+                margin: 20px;
+                padding: 30px;
+            }
+
+            .navbar-links-mobile {
+                padding: 1.5em;
+            }
+
+            .navbar-links-mobile a {
+                padding: 1em;
+                margin-bottom: 8px;
+            }
+
+            .custom-button {
+                margin: 10px 0;
+                padding: 12px 18px;
+                font-size: 1em;
+            }
+
+            .solar-system-container {
+                width: 100%;
+                height: auto;
+                max-width: 300px;
+            }
+
+            .sun {
+                width: 60px;
+                height: 60px;
+            }
+
+            .planet {
+                animation-duration: 15s;
+            }
+
+            .planet-inner {
+                width: 20px;
+                height: 20px;
+            }
+
+            .planet2 {
+                animation-duration: 20s;
+            }
+
+            .planet2-inner {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar {
+                padding: 1em 1.5em;
+            }
+
+            .navbar-links-mobile {
+                padding: 1em;
+            }
+
+            .navbar-links-mobile a {
+                font-size: 0.95em;
+                padding: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar Container -->
+    <div class="navbar-container">
+        <nav class="navbar">
+            <button class="menu-toggle" aria-label="Open Menu">☰</button>
+            <div class="navbar-links">
+                <a href="#" onclick="showSection('html')">HTML</a>
+                <a href="#" onclick="showSection('css')">CSS</a>
+                <a href="#" onclick="showSection('js')">JavaScript</a>
+                <a href="#" onclick="showSection('advanced-css')">Advanced CSS</a>
+                <a href="#" onclick="showSection('resources')">Resources</a>
+                <a href="#" onclick="showSection('solar')">Solar System</a>
+                <a href="#" onclick="showSection('about')">About</a>
+            </div>
+            <!-- Mobile Navbar Links -->
+            <div class="navbar-links-mobile">
+                <button class="close-toggle" aria-label="Close Menu">✕</button>
+                <a href="#" onclick="showSection('html')">HTML</a>
+                <a href="#" onclick="showSection('css')">CSS</a>
+                <a href="#" onclick="showSection('js')">JavaScript</a>
+                <a href="#" onclick="showSection('advanced-css')">Advanced CSS</a>
+                <a href="#" onclick="showSection('resources')">Resources</a>
+                <a href="#" onclick="showSection('solar')">Solar System</a>
+                <a href="#" onclick="showSection('about')">About</a>
+            </div>
+        </nav>
+    </div>
+
+    <div style="padding-top: 90px;"> <!-- Padding for fixed navbar -->
+
+    <!-- Section: HTML Basics -->
+    <div id="html" class="section slide-in html-glow">
+        <h2>HTML: The Structure of Web Content</h2>
+        <p>
+            HTML (HyperText Markup Language) is the foundation of every webpage.  It provides the semantic structure and content. Understanding HTML is fundamental for building any web project.  HTML uses *tags* to define elements, with most elements having a start tag (e.g., `<p>`) and an end tag (e.g., `</p>`).
+        </p>
+        <img src="https://placehold.co/600x300/e91e63/fff?text=HTML+Basics" alt="HTML Basics">
+        <h3>Key HTML Concepts</h3>
+        <ul>
+            <li><strong>Elements:</strong> The fundamental building blocks like headings (`<h1>`), paragraphs (`<p>`), images (`<img>`), and links (`<a>`).</li>
+            <li><strong>Attributes:</strong> Provide additional information about elements, such as the `src` attribute of an `<img>` tag or the `href` attribute of an `<a>` tag.</li>
+            <li><strong>Tags:</strong> Keywords enclosed in angle brackets (e.g., `<html>`, `<head>`, `<body>`).  Tags define the type of element.</li>
+            <li><strong>Document Structure:</strong> HTML documents follow a consistent structure: `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>`.  The `head` section contains metadata, and the `body` contains the visible content.</li>
+            <li><strong>Semantic HTML:</strong>  Using HTML elements that accurately describe the content (e.g.,  `<article>`, `<nav>`, `<aside>`, `<footer>`) improves accessibility and SEO.</li>
+        </ul>
+        <h3>Basic HTML Example:</h3>
+        <p>This code snippet demonstrates a basic HTML structure.</p>
+        <div class="code-snippet">
+            <pre><code>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Example</title>
+    <!--  Link to your CSS file  -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to my Webpage</h1>
+    </header>
+    <main>
+        <p>This is a sample paragraph.</p>
+        <img src="image.jpg" alt="Description of image" width="300">
+        <a href="https://www.example.com">Visit Example</a>
+    </main>
+    <footer>
+        <p>© 2024 My Website</p>
+    </footer>
+</body>
+</html>
+            </code></pre>
+        </div>
+        <button class="custom-button" onclick="showHtmlOutput()">Run HTML Code</button>
+        <div id="htmlOutput" class="display-area"></div>
+    </div>
+
+    <!-- Section: CSS Fundamentals -->
+    <div id="css" class="section slide-in">
+        <h2>CSS: Styling Web Pages</h2>
+        <p>
+            CSS (Cascading Style Sheets) is used to control the visual presentation of HTML elements, separate from the HTML structure. CSS makes your websites look good and makes them usable across different devices. CSS uses *rulesets* to apply styles.  CSS is based on selectors, properties and values.
+        </p>
+        <img src="https://placehold.co/600x300/9c27b0/fff?text=CSS+Basics" alt="CSS Basics">
+        <h3>CSS Concepts</h3>
+        <ul>
+            <li><strong>Selectors:</strong> Target HTML elements to apply styles.  Common selectors: element names (e.g., `p`), class selectors (`.my-class`), and ID selectors (`#my-id`).</li>
+            <li><strong>Properties:</strong> Specific visual attributes to modify (e.g., `color`, `font-size`, `margin`, `padding`, `background-color`).</li>
+            <li><strong>Values:</strong>  Define the settings for each property (e.g., `color: blue;`, `font-size: 16px;`).</li>
+            <li><strong>The Box Model:</strong> Every HTML element is treated as a box, defined by its content, padding, border, and margin.</li>
+            <li><strong>Layout:</strong> Control the positioning of elements using techniques like floats, flexbox, and grid.</li>
+            <li><strong>Specificity:</strong> Rules on which selector will apply to the target</li>
+            <li><strong>Inheritance:</strong> Some CSS properties are inherited from parent elements to their children.</li>
+        </ul>
+        <h3>CSS Example:</h3>
+        <p>This demonstrates CSS applied to a paragraph.</p>
+        <div class="code-snippet">
+            <pre><code>
+/* Internal CSS - within the <style> tag */
+<style>
+    p {
+        color: navy;
+        font-size: 1.1em;
+        line-height: 1.6;
+        /* Example of the Box Model */
+        padding: 10px;
+        margin: 15px;
+        border: 1px solid #ccc;
+    }
+</style>
+</code></pre>
+        </div>
+        <button class="custom-button" onclick="showCssOutput()">Run CSS Code (Preview)</button>
+        <div id="cssOutput" class="display-area"></div>
+    </div>
+
+    <!-- Section: JavaScript Fundamentals -->
+    <div id="js" class="section slide-in">
+        <h2>JavaScript: Making Webpages Interactive</h2>
+        <p>
+            JavaScript is a programming language that enables interactive and dynamic behavior on web pages.  It allows you to respond to user actions, manipulate the DOM (Document Object Model), and communicate with servers. JavaScript gives web pages life, responding to user interactions and changing content on the fly.
+        </p>
+        <img src="https://placehold.co/600x300/4caf50/fff?text=JavaScript+Basics" alt="JavaScript Basics">
+        <h3>JavaScript Concepts</h3>
+        <ul>
+            <li><strong>Variables:</strong> Store data using `let`, `const`, and (less commonly now) `var`.</li>
+            <li><strong>Data Types:</strong> Numbers, strings, booleans, arrays, objects, `null`, `undefined`.</li>
+            <li><strong>Operators:</strong>  Arithmetic (`+`, `-`, `*`, `/`), comparison (`==`, `===`, `!=`, `<`, `>`), logical (`&&`, `||`, `!`).</li>
+            <li><strong>Functions:</strong>  Reusable blocks of code that perform specific tasks.</li>
+            <li><strong>Events:</strong> Actions that occur in the browser (e.g., `click`, `mouseover`, `load`).</li>
+            <li><strong>DOM Manipulation:</strong>  Accessing and modifying HTML elements using JavaScript.</li>
+            <li><strong>Control Flow:</strong> Use `if/else` statements and loops (`for`, `while`) to control the execution of your code.</li>
+        </ul>
+        <h3>JavaScript Example:</h3>
+        <p>A simple JavaScript code snippet demonstrating a function call.</p>
+        <div class="code-snippet">
+            <pre><code>
+// Define a function
+function greet(name) {
+    return "Hello, " + name + "!";
+}
+
+// Call the function
+let message = greet("World");
+console.log(message); // Output: Hello, World!
+
+// Event listener example:
+const button = document.getElementById('myButton');
+button.addEventListener('click', function() {
+    alert("Button clicked!");
+});
+            </code></pre>
+        </div>
+        <p>Below button change the text inside below paragraph</p>
+        <p id="dynamicText">Hello, JavaScript!</p>
+        <button class="custom-button" onclick="changeText()">Change Text (JS)</button>
+        <div id="jsOutput" class="display-area"></div>
+    </div>
+
+    <!-- Section: Advanced CSS Tutorials -->
+    <div id="advanced-css" class="section slide-in">
+        <h2>Advanced CSS Techniques and Tutorials</h2>
+        <p>
+            Explore advanced CSS techniques to create complex and visually stunning web designs. This section covers more sophisticated concepts.
+        </p>
+        <img src="https://placehold.co/600x300/795548/fff?text=Advanced+CSS" alt="Advanced CSS">
+        <h3>CSS Tutorials and Techniques:</h3>
+        <ul>
+            <li><strong>Flexbox:</strong>  Learn flexible box layout to create responsive designs with ease.</li>
+            <li><strong>CSS Grid:</strong> Master CSS Grid for building complex two-dimensional layouts.</li>
+            <li><strong>Transitions and Animations:</strong> Add smooth animations and transitions to your elements to enhance user experience.</li>
+            <li><strong>Transforms:</strong> Apply 2D and 3D transformations to elements (e.g., rotate, scale, skew).</li>
+            <li><strong>Pseudo-classes and Pseudo-elements:</strong>  Use pseudo-classes (e.g., `:hover`, `:focus`) and pseudo-elements (e.g., `::before`, `::after`) to apply styles based on element states or to insert content.</li>
+            <li><strong>Responsive Design with Media Queries:</strong> Create responsive websites that adapt to different screen sizes using media queries.</li>
+            <li><strong>CSS Variables (Custom Properties):</strong>  Learn how to use CSS variables to manage and reuse values throughout your stylesheets.</li>
+        </ul>
+        <h3>Flexbox Tutorial:</h3>
+        <p>Flexbox is a powerful layout model.  It makes it easy to align and distribute space among items in a container, even when their size is unknown.</p>
+        <div class="code-snippet">
+            <pre><code>
+/* HTML Structure for Flexbox */
+<div class="flex-container">
+    <div class="flex-item">Item 1</div>
+    <div class="flex-item">Item 2</div>
+    <div class="flex-item">Item 3</div>
+</div>
+
+/* CSS for Flexbox */
+.flex-container {
+    display: flex; /* Enables flexbox */
+    background-color: #333;
+    padding: 20px;
+    border: 1px solid #555;
+}
+
+.flex-item {
+    background-color: #555;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    flex: 1; /* Items will grow to fill available space */
+}
+            </code></pre>
+        </div>
+        <button class="custom-button" onclick="showFlexboxExample()">Flexbox Example</button>
+        <div id="flexboxOutput" class="display-area"></div>
+
+        <h3>CSS Grid Tutorial:</h3>
+         <p>CSS Grid is designed for two-dimensional layouts—both rows and columns. It allows you to create complex grid layouts with ease.</p>
+        <div class="code-snippet">
+            <pre><code>
+/* HTML structure for Grid  */
+<div class="grid-container">
+    <div class="grid-item">Header</div>
+    <div class="grid-item">Sidebar</div>
+    <div class="grid-item">Content</div>
+    <div class="grid-item">Footer</div>
+</div>
+
+/* CSS Grid Code */
+.grid-container {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* 2 columns: 200px and the rest */
+    grid-template-rows: auto 1fr auto; /* 3 rows: auto height, flexible, auto height */
+    grid-gap: 10px; /* Space between grid items */
+    height: 250px;
+    background-color: #333;
+    border: 1px solid #555;
+}
+
+.grid-item {
+    background-color: #555;
+    padding: 10px;
+    text-align: center;
+}
+/* Define grid areas (optional, but helpful for complex layouts) */
+.grid-item:nth-child(1) { grid-column: 1 / 3; } /* Header spans both columns */
+.grid-item:nth-child(4) { grid-column: 1 / 3; } /* Footer spans both columns */
+            </code></pre>
+        </div>
+        <button class="custom-button" onclick="showGridExample()">CSS Grid Example</button>
+        <div id="gridOutput" class="display-area"></div>
+
+    </div>
+
+    <!-- Section: Solar System -->
+    <div id="solar" class="section slide-in">
+        <h2>The Interactive Solar System</h2>
+        <p>
+            Explore our solar system with this interactive animation. This example showcases CSS animations and transforms.  Click the button below to see the solar system orbit.
+        </p>
+        <img src="https://placehold.co/600x300/4527a0/fff?text=Solar+System" alt="Solar System Illustration">
+        <div class="solar-system-container" id="solarSystemContainer">
+            <div class="sun"></div>
+            <div class="planet" style="width: 160px; height: 160px;">
+                <div class="planet-inner"></div>
+            </div>
+             <div class="planet planet2" style="width: 220px; height: 220px;">
+                <div class="planet2-inner"></div>
+            </div>
+             <!-- Moon for the inner planet -->
+            <div class="planet" style="width: 30px; height: 30px; animation: orbit 10s linear infinite; transform-origin: 15px 15px;">
+                <div class="moon"></div>
+            </div>
+        </div>
+        <button class="custom-button" onclick="startSolarSystemAnimation()">Run Solar System Animation</button>
+        <div id="solarSystemOutput" class="display-area"></div>
+    </div>
+
+    <!-- Section: Resources -->
+    <div id="resources" class="section slide-in">
+        <h2>Useful Resources for Learning</h2>
+        <p>
+            A curated list of essential resources to accelerate your learning journey in web technologies.
+        </p>
+        <img src="https://placehold.co/600x300/673ab7/fff?text=Learning+Resources" alt="Learning Resources">
+        <h3>Key Websites and Documentation</h3>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/">MDN Web Docs</a>: A comprehensive resource for web development technologies, including HTML, CSS, and JavaScript.</li>
+            <li><a href="https://www.w3schools.com/">W3Schools</a>: A popular website for web development tutorials and references.</li>
+            <li><a href="https://css-tricks.com/">CSS-Tricks</a>: A blog with in-depth articles on CSS, front-end development, and web design.</li>
+            <li><a href="https://www.freecodecamp.org/">freeCodeCamp</a>: Offers interactive coding lessons and certifications in web development and other areas.</li>
+            <li><a href="https://www.udacity.com/">Udacity</a> and <a href="https://www.coursera.org/">Coursera</a>: Online learning platforms with courses on a wide range of tech topics.</li>
+        </ul>
+        <h3>How to Learn Effectively</h3>
+        <ul>
+            <li><strong>Consistent Practice:</strong> Set aside regular time for learning and coding.</li>
+            <li><strong>Break Down Complex Topics:</strong> Divide large concepts into smaller, manageable parts.</li>
+            <li><strong>Hands-on Projects:</strong> Build projects to apply what youlearn and solidify your understanding.</li>
+            <li><strong>Use Online Resources:</strong> Utilize documentation, tutorials, and online communities.</li>
+            <li><strong>Ask for Help:</strong> Don't hesitate to ask questions on forums or to experienced developers.</li>
+            <li><strong>Experiment and Iterate:</strong> Try out different approaches and revise your code.  Debugging is a crucial skill!</li>
+        </ul>
+        <h3>Code Editors and IDEs</h3>
+        <ul>
+            <li><strong>Visual Studio Code (VS Code):</strong>  A free, powerful, and highly customizable code editor.</li>
+            <li><strong>Sublime Text:</strong> A fast and versatile text editor.</li>
+            <li><strong>Atom:</strong> A hackable text editor (though development has stopped).</li>
+            <li><strong>WebStorm:</strong> A professional IDE (paid) with advanced features for web development.</li>
+        </ul>
+         <button class="custom-button" onclick="showResourceTips()">Show Resource Tips</button>
+        <div id="resourceTips" class="display-area"></div>
+    </div>
+
+    <!-- Section: About This Hub -->
+    <div id="about" class="section slide-in">
+        <h2>About This Learning Hub</h2>
+        <p class="about-pulse rotate-message">
+            This learning hub is a demonstration project designed to provide foundational knowledge and practical examples in web technologies. It showcases the combined use of HTML, CSS, and JavaScript to create a functional and informative web experience.
+        </p>
+        <img src="https://placehold.co/600x300/009688/fff?text=About+the+Hub" alt="About the Hub">
+        <p>
+            This project is primarily intended for learning purposes, helping illustrate how HTML, CSS, and JavaScript are used together to create a dynamic and interactive web experience.  The content here is designed to be accessible, offering a starting point for beginners.
+        </p>
+
+        <h3>Technologies Used</h3>
+        <ul>
+            <li><strong>HTML:</strong> Used to structure the content, define elements, and create a semantic foundation.</li>
+            <li><strong>CSS:</strong> Utilized for styling the elements, controlling layout, and enhancing visual appeal.</li>
+            <li><strong>JavaScript:</strong> Incorporated to add interactivity and dynamic content to the website.</li>
+            <li><strong>Responsive Design:</strong> The CSS includes media queries to ensure a good user experience across various devices.</li>
+        </ul>
+        <button class="custom-button" onclick="showAboutMessage()">Show About Message</button>
+        <div id="aboutMessage" class="display-area"></div>
+    </div>
+    </div> <!-- End of padding for the fixed navbar -->
+
+    <script>
+        // Helper function to create an element
+        function createElement(tag, attributes = {}, textContent = '') {
+            const element = document.createElement(tag);
+            for (const key in attributes) {
+                element.setAttribute(key, attributes[key]);
+            }
+            element.textContent = textContent;
+            return element;
+        }
+
+        // Function to show a section
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active', 'slide-in');
+            });
+            document.getElementById(sectionId).classList.add('active', 'slide-in');
+
+            document.querySelectorAll('.navbar-links a, .navbar-links-mobile a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            const link = document.querySelector(`.navbar-links a[onclick="showSection('${sectionId}')"]`);
+            const mobileLink = document.querySelector(`.navbar-links-mobile a[onclick="showSection('${sectionId}')"]`);
+
+            if (link) {
+                link.classList.add('active');
+            }
+            if (mobileLink) {
+                mobileLink.classList.add('active');
+            }
+
+            // Close mobile menu if active
+            const mobileMenu = document.querySelector('.navbar-links-mobile');
+            if (mobileMenu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        }
+
+        // Show "html" section on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('html');
+        });
+
+        // Button Actions (HTML Section)
+        function showHtmlOutput() {
+            const outputDiv = document.getElementById('htmlOutput');
+            outputDiv.innerHTML = '';
+
+            const h1 = createElement('h1', { style: 'color: forestgreen;' }, 'HTML Output (Generated)');
+            const p = createElement('p', {}, 'This content was created dynamically using JavaScript.');
+            outputDiv.appendChild(h1);
+            outputDiv.appendChild(p);
+        }
+
+        // Button Actions (CSS Section)
+        function showCssOutput() {
+            const outputDiv = document.getElementById('cssOutput');
+            outputDiv.innerHTML = '';
+
+            // Create a style element
+            const styleElement = createElement('style', {}, `
+                .css-example-heading {
+                    color: crimson;
+                    font-size: 2.4em;
+                    text-decoration: underline;
+                    font-family: 'Arial', sans-serif;
+                }
+            `);
+
+            const heading = createElement('h2', { class: 'css-example-heading' }, 'CSS Styled Heading (Dynamic)');
+            outputDiv.appendChild(styleElement); // Append the style
+            outputDiv.appendChild(heading);
+        }
+
+        // Button Actions (JavaScript Section)
+        function changeText() {
+            const dynamicText = document.getElementById('dynamicText');
+            if (dynamicText) {
+                dynamicText.textContent = "Text Changed by JavaScript!";
+            }
+            dynamicText.classList.add('js-shake'); // Apply Shake Animation
+            setTimeout(() => {
+                dynamicText.classList.remove('js-shake'); // Remove after animation
+            }, 500); // duration of shake.
+        }
+
+         // Button Actions (Advanced CSS: Flexbox Example)
+        function showFlexboxExample() {
+            const outputDiv = document.getElementById('flexboxOutput');
+            outputDiv.innerHTML = '';
+
+            const container = createElement('div', { style: 'display: flex; background-color: #333; padding: 15px; border: 1px solid #555;' });
+            const item1 = createElement('div', { style: 'background-color: #555; padding: 10px; margin: 5px; text-align: center; flex: 1;' }, 'Item 1');
+            const item2 = createElement('div', { style: 'background-color: #555; padding: 10px; margin: 5px; text-align: center; flex: 1;' }, 'Item 2');
+            const item3 = createElement('div', { style: 'background-color: #555; padding: 10px; margin: 5px; text-align: center; flex: 1;' }, 'Item 3');
+
+            container.appendChild(item1);
+            container.appendChild(item2);
+            container.appendChild(item3);
+            outputDiv.appendChild(container);
+        }
+
+         // Button Actions (Advanced CSS: Grid Example)
+        function showGridExample() {
+            const outputDiv = document.getElementById('gridOutput');
+            outputDiv.innerHTML = '';
+
+            const container = createElement('div', { style: 'display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 15px; background-color: #333; padding: 15px; border: 1px solid #555; height: 250px;' });
+            const header = createElement('div', { style: 'background-color: #555; padding: 10px; text-align: center; grid-column: 1 / 3;' }, 'Header'); // Spanning both columns
+            const sidebar = createElement('div', { style: 'background-color: #555; padding: 10px; text-align: center;' }, 'Sidebar');
+            const content = createElement('div', { style: 'background-color: #555; padding: 10px; text-align: center;' }, 'Content');
+            const footer = createElement('div', { style: 'background-color: #555; padding: 10px; text-align: center; grid-column: 1 / 3;' }, 'Footer'); // Spanning both columns
+
+            container.appendChild(header);
+            container.appendChild(sidebar);
+            container.appendChild(content);
+            container.appendChild(footer);
+            outputDiv.appendChild(container);
+        }
+
+        // Button Actions (Resources Section)
+        function showResourceTips() {
+            const outputDiv = document.getElementById('resourceTips');
+            outputDiv.innerHTML = '';
+
+            const tips = [
+                "<strong>Consistent Practice:</strong> Set aside regular time for learning and coding.",
+                "<strong>Break Down Complex Topics:</strong> Divide large concepts into smaller, manageable parts.",
+                "<strong>Hands-on Projects:</strong> Build projects to apply what you learn and solidify your understanding.",
+                "<strong>Use Online Resources:</strong> Utilize documentation, tutorials, and online communities.",
+                "<strong>Ask for Help:</strong> Don't hesitate to ask questions on forums or to experienced developers.",
+                "<strong>Experiment and Iterate:</strong> Try out different approaches and revise your code.  Debugging is a crucial skill!",
+            ];
+
+            const ul = createElement('ul');
+            tips.forEach(tip => {
+                const li = createElement('li', {}, tip);
+                ul.appendChild(li);
+            });
+            outputDiv.appendChild(ul);
+        }
+
+        // Button Actions (About Section)
+        function showAboutMessage() {
+            const outputDiv = document.getElementById('aboutMessage');
+            outputDiv.innerHTML = '';
+
+            const message = "This tech hub is a demonstration of how HTML, CSS, and JavaScript can be combined to create a web learning experience.  We'll add more features, content, and examples in the future. Feedback is always welcome!";
+            const p = createElement('p', {}, message);
+            outputDiv.appendChild(p);
+        }
+
+        // Navbar Toggle Functionality
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.navbar-links-mobile');
+            mobileMenu.classList.toggle('active');
+        }
+
+        // Event Listeners for Navbar Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', toggleMobileMenu);
+        document.querySelector('.close-toggle').addEventListener('click', toggleMobileMenu);
+
+        // Solar System Animation Logic
+        function startSolarSystemAnimation() {
+            const container = document.getElementById('solarSystemContainer');
+            const outputDiv = document.getElementById('solarSystemOutput');
+            outputDiv.innerHTML = '';
+
+            // Check if the animation is already running
+            if (container.classList.contains('orbiting')) {
+                // Animation is running. Remove the class to stop animation and change button
+                container.classList.remove('orbiting');
+                outputDiv.textContent = "Animation Stopped.";
+                // Optionally, change button text to "Start Animation"
+            }
+            else {
+                // Start Animation.  Add the class.
+                container.classList.add('orbiting');
+                outputDiv.textContent = "Solar System Animation Started!";
+            }
+        }
+
+        // Ensure Animation stops when section is hidden:
+        const solarSection = document.getElementById('solar');
+        solarSection.addEventListener('transitionend', function(event) {
+            if (event.propertyName === 'display' && solarSection.style.display === 'none') {
+                // Section is being hidden. Stop the animation
+                const container = document.getElementById('solarSystemContainer');
+                if (container) {
+                    container.classList.remove('orbiting');
+                }
+                // Also, if the animation is hidden, the output section should be cleared.
+                const outputDiv = document.getElementById('solarSystemOutput');
+                 if (outputDiv) {
+                        outputDiv.innerHTML = '';
+                 }
+            }
+        });
+    </script>
+</body>
+</html>

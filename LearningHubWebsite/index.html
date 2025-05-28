@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Learnig Hub Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Link to your CSS file -->
+   
+      
+    <style>
+        /* ===== BASE STYLES ===== */
+body {
+  padding-top: 0;
+  font-family: 'Nunito', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+.no-results {
+  color: red;
+  font-weight: bold;
+  display: none;
+  margin-top: 10px;
+}
+
+/* ===== NAVBAR STYLES ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: black !important;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  height: auto;
+}
+
+.navbar-brand {
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+/* Nav links - common styles */
+.navbar-nav .nav-link,
+#loginLink {
+  font-size: 1.2rem;
+  color: white !important;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-link:hover,
+#loginLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ddd !important;
+}
+
+/* Nav icons */
+.bi {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* ===== SEARCH FORM ===== */
+.search-login-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-form-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: transparent;
+  padding: 0;
+  z-index: 999;
+}
+
+.search-form {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  height: 40px;
+  font-size: 1.1rem;
+}
+
+.search-icon {
+  background-color: rgb(19, 212, 51);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  font-size: 1.1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-icon:active {
+  background-color: rgb(51, 23, 151);
+}
+
+/* ===== TOGGLER STYLES ===== */
+.navbar-toggler {
+  background-color: transparent;
+  border: 1px solid white !important;
+  padding: 0.25rem 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  transition: all 0.3s ease;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+/* ===== MOBILE STYLES (max-width: 991px) ===== */
+@media (max-width: 991px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-toggler {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    z-index: 1001;
+  }
+
+  .navbar-collapse {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    background-color: rgba(0, 0, 0, 0.95);
+    padding: 20px 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    flex-direction: column;
+  }
+
+  .navbar-collapse.show {
+    transform: translateX(0);
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .nav-item, #loginLink {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .search-form-container {
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 15px;
+  }
+}
+
+/* ===== TABLET STYLES (768px - 991px) ===== */
+@media (min-width: 768px) and (max-width: 991px) {
+  .navbar-collapse {
+    width: 60%;
+    max-width: 300px;
+  }
+}
+
+/* ===== DESKTOP STYLES (min-width: 992px) ===== */
+@media (min-width: 992px) {
+  .navbar-collapse {
+    display: flex !important;
+    justify-content: center;
+    padding-left: 500px;
+  }
+
+  .navbar-nav {
+    flex-direction: row;
+    margin-left: auto;
+  }
+
+  .nav-item {
+    margin-right: 15px;
+  }
+
+  .search-form-container {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  .search-icon {
+    margin-left: -40px;
+  }
+}
+
+/* ===== HOMEPAGE SECTION ===== */
+.homepage-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url(homee.jpg);
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.homepage-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, transparent 55%, rgba(209, 4, 250, 0.4) 50%);
+  z-index: 0;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+}
+
+/* ===== LOGIN CONTAINER ===== */
+.login-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 350px;
+  width: 100%;
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  z-index: 1001;
+  display: none;
+}
+
+/* ===== ANIMATIONS ===== */
+#animated-name {
+  font-size: 3em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 2s steps(12, end) forwards;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* ===== CONTACT FORM ===== */
+/* Your existing contact form styles remain unchanged */
+/* ... */
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 991px) {
+  .homepage-section {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 90%;
+  }
+  
+  #animated-name {
+    font-size: 2em;
+  }
+}
+        </style>
+        <link rel="stylesheet" href="footer.css">
+        <link rel="stylesheet" href="about.css">
+        <link rel="stylesheet" href="research.css">
+        <link rel="stylesheet" href="cv.css">
+    
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <div class="container">
+                <div class="logo">
+                    <h1 style="color: red;">Acoder</h1>
+                </div>
+            </div>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>  <!-- Menu icon -->
+    <span class="navbar-toggler-close-icon" style="display: none;">×</span> <!-- Cross icon, initially hidden -->
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#home"><i class="bi bi-house-door"></i>Home</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#research"><i class="bi bi-book"></i>Research</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="techno.html"><i
+                    class="bi bi-calendar-event"></i>Tech learning</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact"><i
+                    class="bi bi-envelope"></i>Contact</a>
+        </li>
+         <a class="nav-link" href="#" id="loginLink" aria-haspopup="true">
+            <i class="bi bi-box-arrow-in-right"></i>Login
+        </a>
+    </ul>
+</div>
+            <div class="search-form-container" id="searchForm">
+                <form class="d-flex search-form">
+                    <label for="searchInput" class="visually-hidden">Search:</label>
+                    <div class="input-group">
+                        <input class="form-control search-input" type="search" id="searchInput" placeholder="Search"
+                            aria-label="Search">
+                        <span class="input-group-text search-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <div id="searchResultMessage" class="no-results"></div>
+                    </div>
+                </form>
+            </div>
+
+    </nav>
+
+    <section id="signup-section">
+        <div class="login-container" id="loginContainer" aria-label="Login Form">
+            <span class="close-button" id="closeLogin">X</span>
+            <h2 id="form-title">Login Form</h2>
+            <div class="toggle-buttons">
+                <button id="login-btn">Login</button>
+                <button id="signup-btn">Signup</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot Password?</a>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="hidden">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="confirm-password" class="form-control" placeholder="Confirm Password"
+                        required>
+                </div>
+                <p id="password-strength" class="password-strength"></p>
+                <button type="submit" class="btn btn-primary password-btn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+
+                <div class="social-buttons">
+                    <a href="https://www.google.com/" class="google-btn">Continue with Google</a>
+                    <a href="https://www.facebook.com/" class="facebook-btn">Continue with Facebook</a>
+                </div>
+            </form>
+
+            <!-- Forgot Password Container -->
+            <div class="forgot-password-container" id="forgotPasswordContainer">
+                <h2>Forgot Password</h2>
+                <p>Enter your email address to receive a verification code.</p>
+                <form id="forgotPasswordForm">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Email Address" required id="resetEmail">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="getVerificationCodeButton">Get Verification Code</button>
+                    <p id="codeSentMessage" style="display: none;">Verification code sent! Check your email.</p>
+                </form>
+
+                <div id="verificationCodeSection" style="display: none;">
+                    <p>Please enter the verification code sent to your email. <span id="countdown"></span></p>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Verification Code" required
+                            id="verificationCode" disabled>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="verifyCodeButton" disabled>Verify Code</button>
+                    <p id="codeVerificationMessage" style="display: none;"></p>
+                </div>
+
+                <div id="newPasswordSection" style="display: none;">
+                    <p>Enter your new password.</p>
+                    <div class="input-group">
+                        <input type="password" class="form-control" placeholder="New Password" required id="newPassword">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" class="form-control" placeholder="Confirm New Password" required
+                            id="confirmNewPassword">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="resetPasswordButton">Reset Password</button>
+                    <p id="passwordResetMessage" style="display: none;">Password reset successful! You can now
+                        <a href="#" id="goToLogin">login</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section class="homepage-section" id="home" >
+            <div class="image-overlay"></div>
+            
+            <div class="content">
+                
+                <h1 id="animated-name">Hi I'am <span>Aweke.B<br> FullStack Developer</span></h1>
+                <p  style=" font-weight: bold; ">Welcome to My Website.</p>
+                <div class="button-container">
+                    <a href="bb.html" class="button">View My Work</a>
+                    <a href="#contact" class="button">Contact Me</a>
+                </div>
+            </div>
+        </section>
+       <!-- cv section -->
+     <section id="cv">
+        <div class="container">
+            <h1>Aweke Babey</h1>
+            <div class="contact-info">
+                <p><strong>Email:</strong> momgold1221@gmail.com</p>
+                <p><strong>Phone:</strong>0930161499</p>
+                <p><strong>Whattsapp:</strong> <a href="https://whatsapp.com/dl/" target="_blank"><img class="link-img"
+                    src="https://logospng.org/download/whatsapp/logo-whatsapp-verde-icone-ios-android-2048.png"
+                    alt="Whatsapp" style="width: 45px; height: 45px; border-radius: 15px;"></a></a></p>
+                <p><strong>Portfolio:</strong> <a href="[Your Portfolio URL]" target="_blank">[Your Portfolio URL]</a></p>
+            </div>
+    
+            <a href="#cv" class="download-button" onclick="downloadCV()">Download CV (PDF)</a>
+    
+            <div class="section summary">
+                <h2>Summary</h2>
+                <p>[Write a concise summary of your skills, experience, and career goals.  Tailor this to the types of jobs you are seeking.]</p>
+            </div>
+    
+            <div class="section skills">
+                <h2>Skills</h2>
+                <ul>
+                    <li>java</li>
+                    <li>C++</li>
+                    <li>Phython</li>
+                    <li>html</li>
+                    <li>javascript</li>
+                    <li>CSS</li>
+                    <!-- Add more skills -->
+                </ul>
+            </div>
+    
+            <div class="section experience">
+                <h2>Experience</h2>
+            
+                <div class="job">
+                    <h3>Fullstack Web Developer</h3>
+                    <p>ADert, Gonda, CA  |  June 2022 – December 2023</p>
+                    <ul>
+                        <li>Developed and maintained responsive web applications using HTML, CSS, and JavaScript.</li>
+                        <li>Collaborated with senior developers on feature implementation and bug fixes.</li>
+                        <li>Implemented UI designs using Bootstrap framework.</li>
+                        <li>Improved website performance by optimizing image sizes.</li>
+                    </ul>
+                </div>
+                <!-- Add more jobs here if you have them -->
+            </div>
+            <div class="section education">
+                <h2>Education</h2>
+    
+                <div class="institution">
+                    <h3>Bachelor Dgree</h3>
+                    <p>DireDawa University, DireDawa, Ethiopia  |  2024</p>
+                    
+                </div>
+    
+               
+    
+            <div class="section projects">
+                <h2>visit Ethiopia</h2>
+    
+                <div class="project">
+                    <h3>[Project Title]</h3>
+                    <p>when person think to visit Ethiopia country that gives full direction <br>if a person needs to visit ethiopia historical place culture,<br>languages and others my website give full direction.</p>
+                    <p>[Technologies used.]</p>
+                    <p>[Link to project (if applicable)]</p>
+                </div>
+                <!-- Add more projects -->
+            </div>
+    
+            <div class="section awards">
+                <h2>Awards and Recognition</h2>
+                <ul>
+                    <li>[Award/Recognition Name] - [Organization], [Year]</li>
+                    <!-- Add more awards -->
+                </ul>
+            </div>
+    
+             <div class="section certifications">
+                <h2>Certifications</h2>
+                <ul>
+                    <li>[Certification Name] - [Issuing Organization], [Year]</li>
+                    <!-- Add more certifications -->
+                </ul>
+            </div>
+    
+        </div>
+    
+        
+     </section>
+       
+<section id="research">
+    <h2>Full Stack & Graphic Design Research</h2>
+    <div class="dive-grid-container">
+
+        <!-- Column 1: UI/UX Research -->
+        <div class="dive-column">
+            <h3>UI/UX Research</h3>
+            <div class="dive-block" data-column="1" data-dive-id="11">
+                <h4 class="dive-title">Eye-Tracking Study on Mobile Navigation</h4>
+                <img src="https://th.bing.com/th/id/OIP.5k2cmVuwWyLCuiT-PTfudQHaEK?rs=1&pid=ImgDetMain" alt="Eye-Tracking Mobile Thumbnail" class="dive-image-thumbnail">
+                <div class="dive-details hidden">
+                    <div class="dive-description">
+                        <p>This research investigates the effectiveness of different mobile navigation patterns using eye-tracking technology. We analyzed user gaze patterns to identify areas of friction and optimize navigation flow for improved usability.</p>
+                        <img src="https://miro.medium.com/max/1400/1*vDpKiInMeRgqFkrR_IJQOw.jpeg" alt="Full Eye-Tracking Mobile" class="dive-image-full">
+
+                        <ul>
+                            <li>Methodology: Eye-tracking, A/B testing</li>
+                            <li>Participants: 30 users aged 25-35</li>
+                            <li>Key Findings: Hamburger menus performed poorly compared to bottom navigation bars.</li>
+                        </ul>
+                        <a href="#" class="read-more">Read Full Paper</a>
+                    </div>
+                </div>
+            </div>
+            <div class="dive-block" data-column="1" data-dive-id="12">
+                <h4 class="dive-title">Usability Testing of Voice Interfaces</h4>
+                <img src="https://usabilitygeek.com/wp-content/uploads/2019/07/tP-TN7Ew.png" alt="Voice Interface Thumbnail" class="dive-image-thumbnail">
+                <div class="dive-details hidden">
+                    <div class="dive-description">
+                        <p>This study examines the usability of voice-based user interfaces (VUIs) for e-commerce applications. We assessed user satisfaction, task completion rates, and error rates in a simulated shopping scenario.</p>
+                        <img src="https://th.bing.com/th/id/R.ad1f99a2929641f8696c6d5a1f83ee6e?rik=zlEabyHYhrh%2f9Q&pid=ImgRaw&r=0&sres=1&sresct=1" alt="Full Voice Interface" class="dive-image-full">
+
+                        <ul>
+                            <li>Methodology: Usability testing, heuristic evaluation</li>
+                            <li>Participants: 20 users with varying levels of tech savviness</li>
+                            <li>Key Findings: Users struggled with complex commands and error recovery.</li>
+                        </ul>
+                         <a href="#" class="read-more">Read Full Paper</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2: Front-End Development -->
+        <div class="dive-column">
+            <h3>Front-End Development</h3>
+            <div class="dive-block" data-column="2" data-dive-id="21">
+                <h4 class="dive-title">Performance Optimization of React Applications</h4>
+                <img src="https://isamatov.com/images/react-optimizing-performance/React%20performance%20optimization.png" alt="React Performance Thumbnail" class="dive-image-thumbnail">
+                React Performance Thumbnail
+                <div class="dive-details hidden">
+                    <div class="dive-description">
+                        <p>This research focuses on techniques for optimizing the performance of large-scale React applications. We investigated code splitting, lazy loading, and memoization strategies to improve initial load times and reduce resource consumption.</p>
+                        <img src="https://th.bing.com/th/id/R.bf1a3d2397334630754ef54a0251afb5?rik=7UUuLPblASDD5A&pid=ImgRaw&r=0" alt="Full React Performance" class="dive-image-full">
+
+                        <ul>
+                            <li>Methodology: Code analysis, performance benchmarking</li>
+                            <li>Tools: Webpack, Chrome DevTools</li>
+                            <li>Key Findings: Code splitting significantly reduced initial load time for complex components.</li>
+                        </ul>
+                        <a href="#" class="read-more">Read Full Paper</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 3: Back-End Development -->
+        <div class="dive-column">
+            <h3>Back-End Development</h3>
+            <div class="dive-block" data-column="3" data-dive-id="31">
+                <h4 class="dive-title">Scalability Analysis of Node.js Microservices</h4>
+                <img src="https://th.bing.com/th/id/OIP.hRyoH0mbwuc2gZ1mDIyX9AAAAA?rs=1&pid=ImgDetMain" alt="Node.js Microservices Thumbnail" class="dive-image-thumbnail">
+                Node.js Microservices Thumbnail
+                <div class="dive-details hidden">
+                    <div class="dive-description">
+                        <p>This research examines the scalability and performance of Node.js microservices architectures. We evaluated different load balancing strategies, database connection pooling techniques, and caching mechanisms under high traffic conditions.</p>
+                        <img src="https://aglowiditsolutions.com/wp-content/uploads/2022/11/Microservices-with-Node-JS-624x312.png" alt="Full Node.js Microservices" class="dive-image-full">
+
+                        <ul>
+                            <li>Methodology: Load testing, system monitoring</li>
+                            <li>Tools: Apache JMeter, Prometheus</li>
+                            <li>Key Findings: Proper load balancing and caching are crucial for handling peak loads.</li>
+                        </ul>
+                         <a href="#" class="read-more">Read Full Paper</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 4: Graphic Design -->
+        <div class="dive-column">
+            <h3>Graphic Design</h3>
+            <div class="dive-block" data-column="4" data-dive-id="41">
+                <h4 class="dive-title">Impact of Color Psychology on Brand Perception</h4>
+                <img src="https://static.wixstatic.com/media/ff1cc5_1e0693be9b1f4cc08e315c075b3e1ad1~mv2.png/v1/fill/w_980,h_735,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/ff1cc5_1e0693be9b1f4cc08e315c075b3e1ad1~mv2.png" alt="Color Psychology Thumbnail" class="dive-image-thumbnail">
+                Color Psychology Thumbnail
+                <div class="dive-details hidden">
+                    <div class="dive-description">
+                        <p>This research investigates the impact of color psychology on brand perception and consumer behavior. We analyzed the effectiveness of different color palettes in various marketing campaigns and assessed their influence on brand recall and purchase intent.</p>
+                        <img src="https://images.squarespace-cdn.com/content/v1/5fe1c9a0013d1b71f8bbe7b0/7ba9f0f5-2856-4fff-adcd-1973baaf887d/Color+Psychology+-+The+Meaning+Behind+Each+Color+In+Art-16.png" alt="Full Color Psychology" class="dive-image-full">
+
+                        <ul>
+                            <li>Methodology: Surveys, A/B testing, data analysis</li>
+                            <li>Participants: 1000 online users</li>
+                            <li>Key Findings: Blue and green colors were associated with trust and reliability.</li>
+                        </ul>
+                        <a href="#" class="read-more">Read Full Paper</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+        
+        <section id="contact" class="p-5">
+            <div class="contact_us_2">
+                <div class="responsive-container-block big-container">
+                    <div class="blueBG"></div>
+                    <div class="responsive-container-block container">
+                        <form class="form-box">
+                            <div class="container-block form-wrapper">
+                                <p class="text-blk contactus-head">Get in Touch</p>
+                                <p class="text-blk contactus-subhead">Nunc erat cursus tellus gravida.</p>
+                                <div class="responsive-container-block">
+                                    <div class="responsive-cell-block wk-ipadp-6 wk-tab-12 wk-mobile-12 wk-desk-6">
+                                        <p class="text-blk input-title">FIRST NAME</p><input class="input" id="ijowk"
+                                            name="FirstName" placeholder="Please enter first name...">
+                                    </div>
+                                    <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+
+                                        <p class="text-blk input-title">LAST NAME</p><input class="input" id="indfi"
+                                            name="Last Name" placeholder="Please enter last name...">
+                                    </div>
+                                    <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                                        <p class="text-blk input-title">EMAIL</p><input class="input" id="ipmgh"
+                                            name="Email" placeholder="Please enter email...">
+                                    </div>
+                                    <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                                        <p class="text-blk input-title">PHONE NUMBER</p><input class="input" id="imgis"
+                                            name="PhoneNumber" placeholder="Please enter phone number...">
+                                    </div>
+                                    <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12"
+                                        id="i634i">
+                                        <p class="text-blk input-title">WHAT DO YOU HAVE IN MIND</p><textarea
+                                            class="textinput" id="i5vyy" placeholder="Please enter query..."></textarea>
+                                    </div>
+                                </div>
+                                <button class="submit-btn">Submit</button>
+                            </div>
+                            <div class="social-media-links">
+                                <a href="https://whatsapp.com/dl/" id="ix94i-2"><img class="link-img"
+                                        src="https://logospng.org/download/whatsapp/logo-whatsapp-verde-icone-ios-android-2048.png"
+                                        alt="Whatsapp"></a>
+                                <a href="https://www.facebook.com/share/15vaKcQ8d6/"><img class="link-img"
+                                        src="https://cdn-icons-png.flaticon.com/512/10483/10483626.png"
+                                        alt="Facebook"></a>
+                                <a href="https://t.me/ye_mar_21"><img class="link-img"
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/512px-Telegram_2019_Logo.svg.png?20220331104809"
+                                        alt="Telegram"></a>
+                                <a href="https://www.instagram.com/aemer_e?igsh=cW83a2treTltbWs4" id="izldf-2"><img class="link-img"
+                                        src="https://th.bing.com/th/id/R.24223c92569a035c382c2b658e9789a0?rik=SsJgrmXtdiNaEw&pid=ImgRaw&r=0"
+                                        alt="Instagram"></a>
+                                        <a href="https://maps.app.goo.gl/xD6N3bbgc5Qum7fn8"><img class="link-img"
+                                            src="https://static.vecteezy.com/system/resources/previews/000/552/361/original/geo-location-pin-vector-icon.jpg"
+                                            alt="location"></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="main">
+            <div class="container">
+
+                <div id="about-me-details"> <p>
+                    <h1>About Me</h1>
+                    I believe in continuous learning and staying up-to-date with the latest industry trends. I'm
+                    always eager to explore new tools and techniques to enhance my skills and create innovative
+                    solutions. I am dedicated to providing user-centric and effective applications.
+                </p>
+
+                <div class="skills-section">
+                    <h2>Skills</h2>
+                    <ul class="skills-list">
+                        <li><strong>Web Development:</strong> HTML, CSS, JavaScript, Node.js, React</li>
+                        <li><strong>Graphics Design:</strong> UI/UX Design, Adobe Creative Suite (Photoshop,
+                            Illustrator, InDesign)</li>
+                        <li><strong>System Design:</strong> Database Design, Architecture Planning, Cloud
+                            Technologies</li>
+                        <li><strong>Programming Languages:</strong> Java, C++</li>
+                        <li><strong>Other:</strong> RESTful APIs, Version Control (Git), Agile Development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
+<footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Me</h5>
+                <p>Learn more about Aweke Babey's background and skills.</p>
+                <a href="#about-me-details" class="btn btn-outline-light btn-sm">Explore Now</a>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#home" class="text-muted">Home</a></li>
+                    <li><a href="#cv" class="text-muted">resume</a></li>
+                    <li><a href="#research" class="text-muted">Research</a></li>
+                    <li><a href="techno.html" class="text-muted">Tech Learning</a></li>
+                    <li><a href="#contact" class="text-muted">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Connect</h5>
+                <div>
+                    <a href="#" class="text-muted me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" class="text-muted me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-muted me-2"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" class="text-muted"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr class="text-muted">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start text-muted">
+                © 2024 Aweke Babey
+            </div>
+            <div class="col-md-6 text-center text-md-end text-muted">
+                All rights reserved.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- General Variables ---
+    const loginContainer = document.getElementById('loginContainer');
+    const loginLink = document.getElementById('loginLink');
+    const closeLogin = document.getElementById('closeLogin');
+
+    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.getElementById('login-form');
+
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+
+    // --- Search Variables ---
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.querySelector('.search-icon'); // Use class selector
+    const searchResultMessage = document.getElementById('searchResultMessage');
+    let highlightedElements = [];
+    let currentHighlightIndex = -1;
+
+    // --- Forgot Password Variables ---
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const forgotPasswordContainer = document.getElementById('forgotPasswordContainer');
+
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    const resetEmailInput = document.getElementById('resetEmail');
+    const verificationCodeSection = document.getElementById('verificationCodeSection');
+    const verificationCodeInput = document.getElementById('verificationCode');
+    const verifyCodeButton = document.getElementById('verifyCodeButton');
+    const newPasswordSection = document.getElementById('newPasswordSection');
+    const newPasswordInput = document.getElementById('newPassword');
+    const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+    const resetPasswordButton = document.getElementById('resetPasswordButton');
+
+    const codeSentMessage = document.getElementById('codeSentMessage');
+    const codeVerificationMessage = document.getElementById('codeVerificationMessage');
+    const passwordResetMessage = document.getElementById('passwordResetMessage');
+    const goToLoginLink = document.getElementById('goToLogin');
+
+    const getVerificationCodeButton = document.getElementById('getVerificationCodeButton');
+    const countdownElement = document.getElementById('countdown');
+    let countdownInterval;
+    let generatedVerificationCode = null;
+
+    // --- Resume Variables ---
+    const resumeLink = document.querySelector('a[href="#cv"]'); // Select resume link.
+    const resumeSection = document.getElementById('cv');
+
+    // --- Animated Name Variables ---
+    const animatedName = document.getElementById('name-span');  // Target the <span>
+
+
+    // --- Utility Functions ---
+
+    // Function to toggle the navbar collapse (hamburger menu)
+    const toggleNavbar = function () {
+        navbarCollapse.classList.toggle('show');
+        const isExpanded = navbarCollapse.classList.contains('show');  //Check condition
+
+        if (isExpanded) {
+            navbarCollapse.style.display = 'hidden'; // Explicitly show the navbar items
+            navbarToggler.innerHTML = '×';  // Just the cross
+        } else {
+            navbarCollapse.style.display = 'none';
+            navbarToggler.innerHTML = '<span class="navbar-toggler-icon"></span>'; // Put the original span back
+        }
+    };
+
+    function searchAndHighlight(query) {
+        clearHighlights();
+
+        let found = false;
+        const allTextElements = document.querySelectorAll(
+            'h2, p, .card-title, .card-text'
+        );
+
+        allTextElements.forEach((element) => {
+            const text = element.textContent || element.innerText;
+            const index = text.toLowerCase().indexOf(query.toLowerCase());
+
+            if (index !== -1) {
+                found = true;
+                const match = text.substring(index, index + query.length);
+                const highlightedText = text.replace(
+                    match,
+                    `<span class="highlight">${match}</span>`
+                );
+                element.innerHTML = highlightedText;
+
+                const highlightedSpan = element.querySelector('.highlight');
+                if (highlightedSpan) {
+                    highlightedElements.push(highlightedSpan);
+                }
+            }
+        });
+
+        if (!found) {
+            searchResultMessage.textContent = 'No search results found';
+            searchResultMessage.style.display = 'block';
+        } else {
+            searchResultMessage.textContent = '';
+            searchResultMessage.style.display = 'none';
+            currentHighlightIndex = -1;
+            scrollToNextHighlight();
+        }
+    }
+
+    function clearHighlights() {
+        const elements = document.querySelectorAll('.highlight');
+        elements.forEach((el) => {
+            const parent = el.parentNode;
+            parent.replaceChild(document.createTextNode(el.textContent), el);
+        });
+        highlightedElements = [];
+        currentHighlightIndex = -1;
+    }
+
+    function scrollToNextHighlight() {
+        if (highlightedElements.length === 0) return;
+
+        currentHighlightIndex = (currentHighlightIndex + 1) % highlightedElements.length;
+        const element = highlightedElements[currentHighlightIndex];
+
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+        });
+
+        element.style.border = '2px solid red';
+        setTimeout(() => {
+            element.style.border = '';
+        }, 1000);
+    }
+
+    function showLoginForm() {
+        signupForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        document.getElementById('form-title').textContent = 'Login Form';
+    }
+
+    function showSignupForm() {
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+        document.getElementById('form-title').textContent = 'Signup Form';
+    }
+
+    // --- Event Listeners ---
+
+    // Navbar Toggle Button
+    navbarToggler.addEventListener('click', toggleNavbar);
+
+    // Login/Signup Form Navigation
+    document.getElementById('signup-btn').addEventListener('click', showSignupForm);
+    document.getElementById('login-btn').addEventListener('click', showLoginForm);
+
+    // Login/Signup Form Submission (Placeholder alerts)
+    signupForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        alert('Signup form submitted (Placeholder)');
+        document.getElementById('password').value = '';
+        document.getElementById('confirm-password').value = '';
+        showLoginForm(); // Go back to login after signup (placeholder)
+    });
+
+    loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        alert('Login form submitted (Placeholder)');
+    });
+
+    // Login Container (Show/Hide)
+    loginLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        loginContainer.style.display = 'block';
+    });
+
+    closeLogin.addEventListener('click', function (event) {
+        event.preventDefault();
+        loginContainer.style.display = 'none';
+    });
+
+    // Search Functionality
+    const handleSearch = function (event) {
+        event.preventDefault();
+        searchAndHighlight(searchInput.value);
+    };
+
+    searchForm.addEventListener('submit', handleSearch);
+    searchButton.addEventListener('click', handleSearch);
+
+    searchInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            handleSearch(event);
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'n' && highlightedElements.length > 0) {
+            scrollToNextHighlight();
+        }
+    });
+
+    // Resume Scrolling
+    if (resumeLink && resumeSection) {
+        resumeLink.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default jump
+
+            resumeSection.scrollIntoView({
+                behavior: 'smooth', // For smooth scrolling
+                block: 'start'   // Align to the top of the viewport
+            });
+        });
+    }
+
+
+    // --- Animated Name (Moved to the bottom) ---
+    if (animatedName) {
+        animatedName.style.animation = `typing 2s steps(11, end) backwards`;
+    }
+
+
+    // --- Forgot Password Functionality ---
+
+    forgotPasswordLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        loginForm.classList.add('hidden');
+        signupForm.classList.add('hidden');
+        forgotPasswordContainer.style.display = 'block';
+
+        document.querySelector('.toggle-buttons').style.display = 'none';
+    });
+
+    getVerificationCodeButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const email = resetEmailInput.value;
+        generatedVerificationCode = Math.floor(100000 + Math.random() * 900000);
+
+        codeSentMessage.style.display = 'block';
+
+        setTimeout(function () {
+            codeSentMessage.style.display = 'none';
+        }, 3000);
+
+        let timeLeft = 60;
+
+        function updateCountdown() {
+            countdownElement.textContent = `(Expires in ${timeLeft} seconds)`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = "(Code expired)";
+                verificationCodeInput.disabled = true;
+                verifyCodeButton.disabled = true;
+            }
+        }
+
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 1000);
+
+        verificationCodeSection.style.display = 'block';
+
+        setTimeout(function () {
+            verificationCodeInput.disabled = false;
+            verifyCodeButton.disabled = false;
+        }, 3000);
+    });
+
+    verifyCodeButton.addEventListener('click', function () {
+        const enteredCode = verificationCodeInput.value;
+
+        if (enteredCode == generatedVerificationCode) {
+            clearInterval(countdownInterval);
+            countdownElement.textContent = "";
+            verificationCodeSection.style.display = 'none';
+            newPasswordSection.style.display = 'block';
+
+            codeVerificationMessage.textContent = "Code verification successful!";
+            codeVerificationMessage.style.display = 'block';
+            setTimeout(function () {
+                codeVerificationMessage.style.display = 'none';
+            }, 3000);
+        } else {
+            alert('Verification code is incorrect. Please try again.');
+        }
+    });
+
+    resetPasswordButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const newPassword = newPasswordInput.value;
+        const confirmNewPassword = confirmNewPasswordInput.value;
+
+        if (newPassword === confirmNewPassword) {
+            newPasswordSection.style.display = 'none';
+            forgotPasswordContainer.style.display = 'none';
+            loginForm.classList.remove('hidden');
+
+           
+            document.querySelector('.toggle-buttons').style.display = 'flex';
+
+            resetEmailInput.value = "";
+            verificationCodeInput.value = "";
+            clearInterval(countdownInterval);
+            countdownElement.textContent = "";
+            verificationCodeInput.disabled = true;
+            verifyCodeButton.disabled = true;
+
+            passwordResetMessage.style.display = 'block';
+        } else {
+            alert('Passwords do not match. Please try again.');
+        }
+    });
+
+    goToLoginLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        loginForm.classList.remove('hidden');  
+
+      
+        document.querySelector('.toggle-buttons').style.display = 'flex';
+
+    
+        loginContainer.style.display = "block"; 
+
+        passwordResetMessage.style.display = 'none'; 
+
+    });
+
+
+    // --- Dive Section ---
+    const diveBlocks = document.querySelectorAll('.dive-block');
+
+    diveBlocks.forEach(diveBlock => {
+        const thumbnail = diveBlock.querySelector('.dive-image-thumbnail');
+        const details = diveBlock.querySelector('.dive-details');
+
+        thumbnail.addEventListener('click', function (event) {
+            event.preventDefault();
+            details.classList.toggle('hidden');
+
+            diveBlocks.forEach(otherDiveBlock => {
+                if (otherDiveBlock !== diveBlock) {
+                    const otherDetails = otherDiveBlock.querySelector('.dive-details');
+                    if (!otherDetails.classList.contains('hidden')) {
+                        otherDetails.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    });
+
+});
+
+// --- Download CV Function ---
+function downloadCV() {
+    window.print();
+}
+</script>
+</script>
+<script src="script.js"></script>
+</body>
+</html>

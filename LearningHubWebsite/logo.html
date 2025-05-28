@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AWE Text Logo (Bold, Shadow, Color Shift)</title>
+<style>
+  .containers {
+    position: relative;
+    width: 220px; /* Adjust as needed */
+    height: 220px; /* Adjust as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: white; /* Or your desired background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  #canvas {
+    position: absolute;
+    padding: 3px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<div class="containers">
+  <canvas id="canvas"></canvas>
+</div>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Set canvas dimensions
+  canvas.width = canvas.parentNode.offsetWidth;
+  canvas.height = canvas.parentNode.offsetHeight;
+
+  // Animation parameters
+  const text = "AWE";
+  const colors = ['green', 'yellow', 'red'];
+  const backgroundColor = 'white';
+  const fontSize = 84; // Larger font size for bold effect
+  const fontFace = 'sans-serif';
+  const fontWeight = 'bold'; // Make it bold
+  let rotation = 0;
+  const rotationSpeed = 0.015;
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  let colorShift = 0; // For color transition
+
+  function drawText(rotation, colorShift) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Background
+    ctx.fillStyle = backgroundColor;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, Math.min(centerX, centerY), 0, 2 * Math.PI);
+    ctx.fill();
+
+    // Text styling
+    ctx.font = `${fontWeight} ${fontSize}px ${fontFace}`; // Bold font
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.rotate(rotation);
+    ctx.translate(-centerX, -centerY);
+
+    const charWidth = ctx.measureText("A").width;
+    let xOffset = (text.length * charWidth / 2) * -1;
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+
+      // Color transition
+      let colorIndex = (i + Math.floor(colorShift)) % colors.length;
+      ctx.fillStyle = colors[colorIndex];
+
+      // Apply Shadow
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'; // Slightly darker shadow
+      ctx.shadowBlur = 6;          // Increased blur for a softer shadow
+      ctx.shadowOffsetX = 3;          // Increased offset
+      ctx.shadowOffsetY = 3;          // Increased offset
+
+      ctx.fillText(char, centerX + xOffset + (charWidth * i), centerY);
+
+      // Reset Shadow for next character
+      ctx.shadowColor = 'transparent';
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+    }
+    ctx.restore();
+  }
+
+  function animate() {
+    rotation += rotationSpeed;
+    colorShift += 0.03;
+    drawText(rotation, colorShift);
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>

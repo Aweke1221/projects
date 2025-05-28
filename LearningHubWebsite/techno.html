@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Tech Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* General Styles (as before - keep your existing styles) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #1e1e1e;
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+.css{
+    margin-left: 1000px;
+    left: 1000px;
+}
+        body.dark-mode {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+        }
+
+        /* Navbar Styles (as before) */
+        .navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            background: linear-gradient(135deg, #2979ff, #64b5f6);
+            color: white;
+            padding: 1.3em 2.5em;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-size: 1.6em;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: #bbdefb;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.9em 1.5em;
+            font-weight: 500;
+            border-radius: 35px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar a:hover {
+            background: #448aff;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Mobile Menu Styles (as before) */
+        .menu-toggle,
+        .close-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.7em;
+            padding: 0.6em;
+            border: none;
+            background: none;
+            transition: color 0.3s ease;
+        }
+
+        .menu-toggle:hover,
+        .close-toggle:hover {
+            color: #ddd;
+        }
+
+        .close-toggle {
+            font-size: 1.2em;
+            position: absolute;
+            top: 0px;
+            right: 0.73em;
+        }
+     .menu-toggle {
+       font-size: 3.2em;
+       position: absolute;
+       top: 0px;
+       align-items: left;
+       left: 0;
+     }
+        .navbar-links-mobile {
+            display: none;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 35%;
+            height: 100vh;
+            background: linear-gradient(135deg, #2979ff, #64b5f6);
+            padding: 2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: translateX(-100%);
+            z-index: 99;
+            overflow-y: auto;
+        }
+
+        .navbar-links-mobile.active {
+            display:flex;
+            transform: translateX(0);
+        }
+
+        .navbar-links-mobile a {
+            padding: 1.1em;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.15);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar-links-mobile a:hover {
+          display: hidden;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.03);
+        }
+
+        /* Dark Mode Options (as before) */
+        .dark-mode-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .dark-mode-options {
+            color: #f0f0f0;
+        }
+
+        .dark-mode-options input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: transparent;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .dark-mode-options input[type="radio"]:checked {
+            background-color: #fff;
+            border-color: #fff;
+        }
+
+        .dark-mode-options label {
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            font-size: 0.9em;
+        }
+
+        /* Section Styles (as before) */
+        .section {
+            display: none;
+            padding: 50px;
+            background: #fff;
+            color: #1e1e1e;
+            margin: 30px;
+            margin-top: 90px;
+            border-radius: 15px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease,
+                color 0.3s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .section {
+            background: #272727;
+            color: #f0f0f0;
+            box-shadow: 0 12px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .section:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .section:hover {
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:nth-child(even) {
+            background-color: #eee;
+        }
+
+        body.dark-mode .section:nth-child(even) {
+            background-color: #333;
+        }
+
+        .section h2 {
+            color: #81d4fa;
+            border-bottom: 3px solid #4fc3f7;
+            padding-bottom: 0.8em;
+            margin-bottom: 2.5em;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.dark-mode .section h2 {
+            color: #b2ebf2;
+        }
+
+        .section h2:hover {
+            color: #b2ebf2;
+            border-color: #80deea;
+        }
+
+        .section p {
+            margin-bottom: 1.4em;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .section ul {
+            list-style-type: disc;
+            padding-left: 30px;
+        }
+
+        .section li {
+            padding: 12px 0;
+            border-bottom: 1px solid #ccc;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode .section li {
+            border-bottom: 1px solid #424242;
+        }
+
+        .section li:hover {
+            color: #aaa;
+        }
+
+        .section li:last-child {
+            border-bottom: none;
+        }
+
+        /* Code Snippets (as before) */
+        .code-snippet {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 18px;
+            border-radius: 10px;
+            font-family: 'Consolas', monospace;
+            overflow-x: auto;
+            margin-bottom: 2em;
+            line-height: 1.4;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.dark-mode .code-snippet {
+            background-color: #1e1e1e;
+            border: 1px solid #424242;
+        }
+
+        .code-snippet pre {
+            margin: 0;
+        }
+
+        .code-snippet code {
+            color: #a5d6a7;
+            display: block;
+            padding: 0.3em;
+        }
+
+        /* Display Area (as before) */
+        .display-area {
+            border: 2px solid #ccc;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+            font-size: 1.15em;
+            overflow-wrap: break-word;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.dark-mode .display-area {
+            background-color: #1e1e1e;
+            border: 2px solid #424242;
+        }
+
+        /* Images (as before) */
+        .section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .section img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animations (as before) */
+        @keyframes slideInFromBottom {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section.slide-in {
+            animation: slideInFromBottom 0.7s ease;
+        }
+
+        /* Custom Button (as before) */
+        .custom-button {
+            background-color: #4fc3f7;
+            color: #121212;
+            padding: 14px 22px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+            margin: 12px;
+            display: inline-block;
+        }
+
+        .custom-button:hover {
+            background-color: #bbdefb;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .custom-button:active {
+            transform: scale(0.97);
+        }
+
+        /* Calculator Styles (as before) */
+        #calculator {
+            max-width: 300px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode #calculator {
+            border-color: #555;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            background-color: #333;
+        }
+
+        #display {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: right;
+            background-color: #fff;
+            color: #1e1e1e;
+            border: none;
+            outline: none;
+            text-align: center;
+        }
+
+        body.dark-mode #display {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+        }
+
+        .button {
+            padding: 18px;
+            font-size: 1.2em;
+            text-align: center;
+            border: 1px solid #ddd;
+            background-color: #eee;
+            color: #1e1e1e;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        body.dark-mode .button {
+            border-color: #555;
+            background-color: #444;
+            color: #f0f0f0;
+        }
+
+        .button:hover {
+            background-color: #ccc;
+        }
+
+        body.dark-mode .button:hover {
+            background-color: #555;
+        }
+
+        .operator {
+            background-color: #673ab7;
+            color: white;
+        }
+
+        .operator:hover {
+            background-color: #7e57c2;
+        }
+
+        .clear {
+            background-color: #e53935;
+            color: white;
+        }
+
+        .clear:hover {
+            background-color: #d32f2f;
+        }
+
+        .equal {
+            background-color: #388e3c;
+            color: white;
+        }
+
+        .equal:hover {
+            background-color: #43a047;
+        }
+
+        /* Solar System (as before) */
+        .solar-system-container {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .sun {
+            width: 80px;
+            height: 80px;
+            background-color: #ffc107;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px #ffc107;
+            z-index: 1;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed #ccc;
+            animation: orbit 20s linear infinite;
+            transform-origin: 200px 200px;
+        }
+
+        .planet-inner {
+            width: 30px;
+            height: 30px;
+            background-color: #1e88e5;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            z-index: 2;
+        }
+
+        .planet2 {
+            animation-delay: 5s;
+            animation-duration: 25s;
+            transform-origin: 200px 200px;
+        }
+
+        .planet2-inner {
+            width: 20px;
+            height: 20px;
+            background-color: #f44336;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            z-index: 2;
+        }
+
+        .moon {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #aaa;
+            border-radius: 50%;
+            animation: moonOrbit 5s linear infinite;
+            transform-origin: 15px 15px;
+            left: 15px;
+            top: -5px;
+            z-index: 3;
+        }
+
+        @keyframes orbit {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes moonOrbit {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Spin Wheel Styles (as before) */
+        #spinContainer {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        #wheel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: conic-gradient(red, yellow, green, cyan, blue, magenta, red);
+            transition: transform 5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #spinButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid black;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        #spinResult {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Advanced CSS Section Styles (as before) */
+        .advanced-css-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .advanced-css-item {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Media Queries (as before) */
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .menu-toggle,
+            .close-toggle {
+                display: block;
+            }
+
+            .navbar {
+                padding: 1em;
+            }
+
+            .section {
+                padding: 30px;
+                margin: 20px;
+                margin-top: 70px;
+            }
+
+            .section h2 {
+                font-size: 2em;
+            }
+
+            .solar-system-container {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section {
+                padding: 20px;
+                margin: 15px;
+                margin-top: 60px;
+            }
+
+            .section h2 {
+                font-size: 1.75em;
+            }
+
+            .section p {
+                font-size: 1.1em;
+            }
+
+            .solar-system-container {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        /* Styling for the interactive examples (as before) */
+        .example-container {
+            margin-bottom: 20px;
+        }
+
+        .run-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .example-code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+        }
+
+        .example-output {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        /* Style for "Show Code" button */
+        .show-code-button {
+            background-color: #607d8b;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .show-code-button:hover {
+            background-color: #78909c;
+        }
+
+        /* Style for code display area (initially hidden) */
+        .code-display-area {
+            background-color: #333;
+            color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none; /* Initially hidden */
+            overflow-x: auto;
+            font-family: monospace;
+            white-space: pre;
+        }
+
+        .code-display-area.show {
+            display: flex; /* Show when the class 'show' is added */
+        }
+        .learn{
+          color: white;
+          left: 50px;
+          align-items: center;
+          background-color: blue;
+          align-items: center;
+          height:50px;
+          padding-top: 5px;
+          margin-left: 100px;
+          margin-bottom: 100px;
+          left: 50%;
+          bottom: 100px;
+          align-items: center;
+          border-radius: 10px;
+          font-size: 2rem;
+          padding: 20px;
+          padding-bottom: 40px;
+        }
+      
+    </style>
+</head>
+
+<body>
+    <div class="navbar-container">
+        <nav class="navbar">
+            
+            <button class="menu-toggle" aria-label="Open Menu" onclick="toggleMobileMenu()"> <i class="fas fa-bars"></i></button>
+               
+            </button>
+            <a href="#" class="navbar-brand">Tech Learning Hub</a>
+            <div class="navbar-links">
+                
+               <a href="index.html" >Home</a>
+                <a href="#" onclick="showSection('html')">HTML</a>
+                <a href="#" onclick="showSection('css')">CSS</a>
+                <a href="#" onclick="showSection('js')">JavaScript</a>
+                <a href="#" onclick="showSection('advanced-css')">Advanced CSS</a>
+                <a href="#" onclick="showSection('resources')">Resources</a>
+                <a href="#" onclick="showSection('solar')">Solar System</a>
+                <a href="#" onclick="showSection('project')">Project</a>
+                <a href="#" onclick="showSection('spin')">Spin Wheel</a>
+                <a href="#" onclick="showSection('about')">About</a>
+                <div class="dark-mode-options">
+                    <label for="lightMode">Light</label>
+                    <input type="radio" id="lightMode" name="darkMode" value="light">
+                    <label for="darkMode">Dark</label>
+                    <input type="radio" id="darkMode" name="darkMode" value="dark">
+                </div>
+            </div>
+            <div class="navbar-links-mobile">
+                <button class="close-toggle" aria-label="Close Menu" onclick="toggleMobileMenu()">
+                    <i class="fas fa-times"></i>
+                </button>
+                 <a href="index.html" >Home</a>
+                <a href="#" onclick="showSection('html')">HTML</a>
+                <a href="#" onclick="showSection('css')">CSS</a>
+                <a href="#" onclick="showSection('js')">JavaScript</a>
+                <a href="#" onclick="showSection('advanced-css')">Advanced CSS</a>
+                <a href="#" onclick="showSection('resources')">Resources</a>
+                <a href="#" onclick="showSection('solar')">Solar System</a>
+                <a href="#" onclick="showSection('project')">Project</a>
+                <a href="#" onclick="showSection('spin')">Spin Wheel</a>
+                <a href="#" onclick="showSection('about')">About</a>
+                <div class="dark-mode-options">
+                    <label for="lightModeMobile">Light</label>
+                    <input type="radio" id="lightModeMobile" name="darkModeMobile" value="light">
+                    <label for="darkModeMobile">Dark</label>
+                    <input type="radio" id="darkModeMobile" name="darkModeMobile" value="dark">
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div id="html" class="section slide-in">
+        <h2>HTML: The Structure of Web Content</h2>
+        <p>HTML (HyperText Markup Language) is the backbone of web pages, defining their structure and content.</p>
+        <img src="https://www.shutterstock.com/shutterstock/photos/2421753181/display_1500/stock-photo-inspiring-nature-beauty-enchants-all-living-beings-2421753181.jpg" alt="HTML Basics">
+        <h3>Key HTML Concepts</h3>
+        <ul>
+            <li><strong>Elements:</strong> Headings (`<h1>`), paragraphs (`<p>`), images (`<img>`), and links (`<a>`).</li>
+            <li><strong>Attributes:</strong> `src` for images, `href` for links.</li>
+            <li><strong>Tags:</strong> Keywords in angle brackets.</li>
+            <li><strong>Document Structure:</strong> `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`.</li>
+            <li><strong>Semantic HTML:</strong> `<article>`, `<nav>`, `<aside>`, `<footer>`.</li>
+        </ul>
+        <div class="code-snippet">
+            <pre><code><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Basic Page</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome!</h1>
+    </header>
+    <main>
+        <p>This is a paragraph.</p>
+        <img src="https://www.shutterstock.com/shutterstock/photos/2421753181/display_1500/stock-photo-inspiring-nature-beauty-enchants-all-living-beings-2421753181.jpg" alt="Sample Image" width="200">
+        <a href="https://www.example.com">Visit Example</a>
+    </main>
+
+</body>
+</html></code></pre>
+        </div>
+        <div id="htmlOutput" class="display-area"></div>
+        <button class="custom-button" onclick="showHtmlOutput()">Show HTML Output</button>
+        <button class="show-code-button" onclick="showCode('htmlCode')">Show Code</button>
+        <div id="htmlCode" class="code-display-area">
+            <!DOCTYPE html>
+            <html lang="en">
+
+            <head>
+                <meta charset="UTF-8">
+                <title>My Basic Page</title>
+            </head>
+
+            <body>
+                <header>
+                    <h1>Welcome!</h1>
+                </header>
+                <main>
+                    <p>This is a paragraph.</p>
+                    <img src="sample.jpg" alt="Sample Image" width="200">
+                    <a href="https://www.example.com">Visit Example</a>
+                </main>
+              
+            </body>
+
+            </html>
+        </div>
+        <a href="html.html" id="learn" ><button class="learn">learn more about Html</button></a>
+    </div>
+
+    <div id="css" class="section slide-in">
+        <h2>CSS: Styling Web Pages</h2>
+        <p>CSS (Cascading Style Sheets) is used to style the presentation of HTML elements, controlling colors, fonts, and layout.</p>
+        <img src="https://placehold.co/600x300/9c27b0/fff?text=CSS+Basics" alt="CSS Basics">
+        <h3>CSS Concepts</h3>
+        <ul>
+            <li><strong>Selectors:</strong> Target HTML elements (e.g., `p`, `.my-class`, `#my-id`).</li>
+            <li><strong>Properties:</strong> `color`, `font-size`, `margin`, `padding`, `background-color`.</li>
+            <li><strong>Values:</strong> `color: blue;`, `font-size: 16px;`.</li>
+            <li><strong>The Box Model:</strong> Content, padding, border, and margin.</li>
+            <li><strong>Layout:</strong> `float`, `flexbox`, and `grid`.</li>
+        </ul>
+        <div class="code-snippet">
+            <pre><code>/* Button Style */
+.my-button {
+    background: linear-gradient(to right, #64b5f6, #2196f3);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.my-button:hover {
+    background: linear-gradient(to right, #2196f3, #64b5f6);
+}</code></pre>
+        </div>
+        <div id="cssOutput" class="display-area"></div>
+        <button class="custom-button" onclick="showCssOutput()">Show CSS Output</button>
+        <button class="show-code-button" onclick="showCode('cssCode')">Show Code</button>
+        <div id="cssCode" class="code-display-area">
+            /* Button Style */
+            .my-button {
+            background: linear-gradient(to right, #64b5f6, #2196f3);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            }
+
+            .my-button:hover {
+            background: linear-gradient(to right, #2196f3, #64b5f6);
+            }
+        </div>
+        <a href="css.html" id="learn" ><button class="learn">learn more about cs</button></a>
+    </div>
+
+    <div id="js" class="section slide-in" style="">
+        <h2>JavaScript: Making Webpages Interactive</h2>
+        <p>JavaScript adds interactivity and dynamic behavior to web pages.</p>
+        avaScript Form Validation
+        • Growth of the WWW has resulted in a demand for dynamic and
+        interactive web sites.
+        • JavaScript
+        • is a front-end scripting language developed by Netscape for
+        dynamic content
+        • is a lightweight, interpreted programming language of the Web.
+        • can be used as object-oriented language
+        • Client-side technology
+        • Embedded in your HTML page
+        • Interpreted by the Web browser
+        • Simple and flexible
+        3
+        JavaScr
+        <img src="https://placehold.co/600x300/4caf50/fff?text=JavaScript+Basics" alt="JavaScript Basics">
+        <h3>JavaScript Concepts</h3>
+        <ul>
+            <li><strong>Variables:</strong> `let`, `const`, and `var`.</li>
+            <li><strong>Data Types:</strong> Numbers, strings, booleans, arrays, objects, `null`, `undefined`.</li>
+            <li><strong>Operators:</strong> Arithmetic, comparison, logical.</li>
+            <li><strong>Functions.</strong></li>
+            <li><strong>Events:</strong> `click`, `mouseover`, `load`.</li>
+            <li><strong>DOM Manipulation.</strong></li>
+            <li><strong>Control Flow:</strong> `if/else`, `for`, `while`.</li>
+        </ul>
+        <div class="code-snippet">
+            <pre><code>// Example JavaScript code
+let message = "Hello, JavaScript!";
+console.log(message); // Output: Hello, JavaScript!</code></pre>
+        </div>
+        <div id="jsOutput" class="display-area">
+            <button class="custom-button" onclick="showJsOutput()">Show JavaScript Output</button>
+        </div>
+        <p id="dynamicText">Hello, JavaScript!</p>
+        <button class="show-code-button" onclick="showCode('jsCode')">Show Code</button>
+        <div id="jsCode" class="code-display-area">
+            // Example JavaScript code
+            let message = "Hello, JavaScript!";
+            console.log(message); // Output: Hello, JavaScript!
+        </div>
+     
+   <a href="js.html" id="learn" ><button class="learn">learn more about js</button></a>
+    </div>
+    <div id="advanced-css" class="section slide-in">
+        <h2>Advanced CSS Techniques and Tutorials</h2>
+        <p>Explore advanced CSS techniques.</p>
+        <img src="https://placehold.co/600x300/795548/fff?text=Advanced+CSS" alt="Advanced CSS">
+        <h3>CSS Tutorials and Techniques:</h3>
+        <ul>
+            <li>Flexbox</li>            <li>CSS Grid</li>
+            <li>Transitions and Animations</li>
+            <li>Transforms</li>
+            <li>Pseudo-classes and Pseudo-elements</li>
+            <li>Responsive Design with Media Queries</li>
+            <li>CSS Variables (Custom Properties)</li>
+        </ul>
+
+        <div class="advanced-css-container">
+            <!-- Flexbox -->
+            <div class="advanced-css-item">
+                <h4>Flexbox</h4>
+                <p>Flexbox is a powerful layout module.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runFlexboxExample()">Run Flexbox</button>
+                    <div class="example-code">
+                        <pre><code>.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.item {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  margin: 10px;
+}</code></pre>
+                    </div>
+                    <div id="flexbox-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('flexboxCode')">Show Code</button>
+                    <div id="flexboxCode" class="code-display-area">
+                        .container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 200px;
+                        }
+
+                        .item {
+                        width: 100px;
+                        height: 100px;
+                        background-color: lightblue;
+                        margin: 10px;
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSS Grid -->
+            <div class="advanced-css-item">
+                <h4>CSS Grid</h4>
+                <p>CSS Grid is a two-dimensional layout system.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runGridExample()">Run Grid</button>
+                    <div class="example-code">
+                        <pre><code>.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.grid-item {
+  background-color: lightcoral;
+  padding: 20px;
+  text-align: center;
+}</code></pre>
+                    </div>
+                    <div id="grid-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('gridCode')">Show Code</button>
+                    <div id="gridCode" class="code-display-area">
+                        .grid-container {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 10px;
+                        }
+
+                        .grid-item {
+                        background-color: lightcoral;
+                        padding: 20px;
+                        text-align: center;
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transitions and Animations -->
+            <div class="advanced-css-item">
+                <h4>Transitions and Animations</h4>
+                <p>Create smooth transitions and animations.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runTransitionsExample()">Run Transitions</button>
+                    <div class="example-code">
+                        <pre><code>.box {
+  width: 100px;
+  height: 100px;
+  background-color: lightgreen;
+  transition: all 0.5s ease;
+}
+
+.box:hover {
+  width: 150px;
+  height: 150px;
+  background-color: lightcoral;
+}</code></pre>
+                    </div>
+                    <div id="transitions-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('transitionsCode')">Show Code</button>
+                    <div id="transitionsCode" class="code-display-area">
+                        .box {
+                        width: 100px;
+                        height: 100px;
+                        background-color: lightgreen;
+                        transition: all 0.5s ease;
+                        }
+
+                        .box:hover {
+                        width: 150px;
+                        height: 150px;
+                        background-color: lightcoral;
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transforms -->
+            <div class="advanced-css-item">
+                <h4>Transforms</h4>
+                <p>Apply 2D or 3D transformations.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runTransformsExample()">Run Transforms</button>
+                    <div class="example-code">
+                        <pre><code>.transform-box {
+  width: 100px;
+  height: 100px;
+  background-color: lightyellow;
+  transform: rotate(45deg);
+}</code></pre>
+                    </div>
+                    <div id="transforms-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('transformsCode')">Show Code</button>
+                    <div id="transformsCode" class="code-display-area">
+                        .transform-box {
+                        width: 100px;
+                        height: 100px;
+                        background-color: lightyellow;
+                        transform: rotate(45deg);
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pseudo-classes and Pseudo-elements -->
+            <div class="advanced-css-item">
+                <h4>Pseudo-classes and Pseudo-elements</h4>
+                <p>Style based on state or insert content.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runPseudoExample()">Run Pseudo</button>
+                    <div class="example-code">
+                        <pre><code>a:hover {
+  color: red;
+}
+
+p::first-line {
+  font-weight: bold;
+}</code></pre>
+                    </div>
+                    <div id="pseudo-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('pseudoCode')">Show Code</button>
+                    <div id="pseudoCode" class="code-display-area">
+                        a:hover {
+                        color: red;
+                        }
+
+                        p::first-line {
+                        font-weight: bold;
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Responsive Design with Media Queries -->
+            <div class="advanced-css-item">
+                <h4>Responsive Design with Media Queries</h4>
+                <p>Adapt layout based on screen size.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runResponsiveExample()">Run Responsive</button>
+                    <div class="example-code">
+                        <pre><code>@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}</code></pre>
+                    </div>
+                    <div id="responsive-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('responsiveCode')">Show Code</button>
+                    <div id="responsiveCode" class="code-display-area">
+                        @media (max-width: 768px) {
+                        body {
+                        font-size: 16px;
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSS Variables (Custom Properties) -->
+            <div class="advanced-css-item">
+                <h4>CSS Variables (Custom Properties)</h4>
+                <p>Define reusable values.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runVariablesExample()">Run Variables</button>
+                    <div class="example-code">
+                        <pre><code>:root {
+  --primary-color: coral;
+}
+
+h1 {
+  color: var(--primary-color);
+}</code></pre>
+                    </div>
+                    <div id="variables-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('variablesCode')">Show Code</button>
+                    <div id="variablesCode" class="code-display-area">
+                        :root {
+                        --primary-color: coral;
+                        }
+
+                        h1 {
+                        color: var(--primary-color);
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- CSS Animation -->
+            <div class="advanced-css-item">
+                <h4>CSS Animation</h4>
+                <p>Create keyframe-based animations.</p>
+                <div class="example-container">
+                    <button class="run-button" onclick="runAnimationExample()">Run Animation</button>
+                    <div class="example-code">
+                        <pre><code>.animated-box {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  animation: slide 2s infinite alternate;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100px);
+  }
+}</code></pre>
+                    </div>
+                    <div id="animation-output" class="example-output"></div>
+                    <button class="show-code-button" onclick="showCode('animationCode')">Show Code</button>
+                    <div id="animationCode" class="code-display-area">
+                        .animated-box {
+                        width: 100px;
+                        height: 100px;
+                        background-color: lightblue;
+                        animation: slide 2s infinite alternate;
+                        }
+
+                        @keyframes slide {
+                        from {
+                        transform: translateX(0);
+                        }
+                        to {
+                        transform: translateX(100px);
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="solar" class="section slide-in">
+        <h2>The Interactive Solar System</h2>
+        <p>Explore our solar system with this interactive animation.</p>
+        <img src="https://placehold.co/600x300/4527a0/fff?text=Solar+System" alt="Solar System Illustration">
+        <p>This section visually represents the basic orbital mechanics of a simplified solar system using CSS animations. The Sun is the central element, and two planets orbit around it at different speeds and distances. A moon also orbits one of the planets, demonstrating a hierarchical orbital system.</p>
+
+        <div class="solar-system-container">
+            <div class="sun"></div>
+            <div class="planet" style="width: 160px; height: 160px;">
+                <div class="planet-inner"></div>
+            </div>
+            <div class="planet planet2" style="width: 220px; height: 220px;">
+                <div class="planet2-inner"></div>
+            </div>
+            <div class="planet" style="width: 30px; height: 30px; animation: orbit 10s linear infinite; transform-origin: 15px 15px;">
+                <div class="moon"></div>
+            </div>
+        </div>
+        <button class="show-code-button" onclick="showCode('solarCode')">Show Code</button>
+        <div id="solarCode" class="code-display-area">
+            .solar-system-container {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            margin: 20px auto;
+            }
+
+            .sun {
+            width: 80px;
+            height: 80px;
+            background-color: #ffc107;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px #ffc107;
+            z-index: 1;
+            }
+
+            .planet {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed #ccc;
+            animation: orbit 20s linear infinite;
+            transform-origin: 200px 200px;
+            }
+
+            .planet-inner {
+            width: 30px;
+            height: 30px;
+            background-color: #1e88e5;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            z-index: 2;
+            }
+
+            .planet2 {
+            animation-delay: 5s;
+            animation-duration: 25s;
+            transform-origin: 200px 200px;
+            }
+
+            .planet2-inner {
+            width: 20px;
+            height: 20px;
+            background-color: #f44336;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            z-index: 2;
+            }
+
+            .moon {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #aaa;
+            border-radius: 50%;
+            animation: moonOrbit 5s linear infinite;
+            transform-origin: 15px 15px;
+            left: 15px;
+            top: -5px;
+            z-index: 3;
+            }
+
+            @keyframes orbit {
+            0% {
+            transform: rotate(0deg);
+            }
+
+            100% {
+            transform: rotate(360deg);
+            }
+            }
+
+            @keyframes moonOrbit {
+            0% {
+            transform: rotate(0deg);
+            }
+
+            100% {
+            transform: rotate(360deg);
+            }
+            }
+        </div>
+    </div>
+
+    <div id="project" class="section slide-in">
+  <h2>Final Project: Scientific Calculator</h2>
+  <p>Build a functional scientific calculator.</p>
+  <div id="project-display">
+    <h3 style="margin-bottom: 15px;">Scientific Calculator</h3>
+    <div id="calculator">
+      <input type="text" id="display" readonly>
+      <div class="buttons">
+        <button class="button clear" onclick="clearDisplay()">C</button>
+        <button class="button" onclick="backspace()">⌫</button>
+        <button class="button operator" onclick="appendToDisplay('/')">/</button>
+        <button class="button operator" onclick="appendToDisplay('*')">*</button>
+        <button class="button" onclick="appendToDisplay('7')">7</button>
+        <button class="button" onclick="appendToDisplay('8')">8</button>
+        <button class="button" onclick="appendToDisplay('9')">9</button>
+        <button class="button operator" onclick="appendToDisplay('-')">-</button>
+        <button class="button" onclick="appendToDisplay('4')">4</button>
+        <button class="button" onclick="appendToDisplay('5')">5</button>
+        <button class="button" onclick="appendToDisplay('6')">6</button>
+        <button class="button operator" onclick="appendToDisplay('+')">+</button>
+        <button class="button" onclick="appendToDisplay('1')">1</button>
+        <button class="button" onclick="appendToDisplay('2')">2</button>
+        <button class="button" onclick="appendToDisplay('3')">3</button>
+        <button class="button equal" onclick="calculate()">=</button>
+        <button class="button" onclick="appendToDisplay('0')">0</button>
+        <button class="button" onclick="appendToDisplay('.')">.</button>
+        <button class="button" onclick="negate()">+/-</button>
+        <button class="button" onclick="calculateSquareRoot()">√</button>
+        <button class="button" onclick="calculateLog()">log</button>
+        <button class="button" onclick="calculateSin()">sin</button>
+        <button class="button" onclick="calculateCos()">cos</button>
+        <button class="button" onclick="calculateTan()">tan</button>
+        <button class="button" onclick="calculatePower()">x^y</button>
+        <button class="button" onclick="calculateFactorial()">!</button>
+        <button class="button" onclick="openParenthesis()">(</button>
+        <button class="button" onclick="closeParenthesis()">)</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="show-code-button" onclick="showCode('solarCode')">Show Code</button>
+        <div id="solarCode" class="code-display-area">
+
+
+<!-- JavaScript Functions -->
+        </div>
+     
+    <div id="resources" class="section slide-in">
+        <h2>Useful Resources for Learning</h2>
+        <p>A curated list of essential resources to accelerate your learning journey in web technologies.</p>
+        <img src="https://placehold.co/600x300/673ab7/fff?text=Learning+Resources" alt="Learning Resources">
+        <h3>Key Websites and Documentation</h3>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/">MDN Web Docs</a></li>
+            <li><a href="https://www.w3schools.com/">W3Schools</a></li>
+            <li><a href="https://css-tricks.com/">CSS-Tricks</a></li>
+            <li><a href="https://www.freecodecamp.org/">freeCodeCamp</a></li>
+        </ul>
+    </div>
+
+    <div id="spin" class="section slide-in">
+        <h2>Money Lucky Spin Wheel</h2>
+        <p>Spin the wheel to win money lucky!</p>
+        <p>This section introduces a simple spin wheel implemented with HTML, CSS, and JavaScript. The wheel is styled using CSS to create a circular gradient effect, and JavaScript is used to handle the spinning animation and determine the winning amount. This interactive element is designed to engage users and demonstrate basic animation and event handling in web development.</p>
+        <div class="code-snippet">
+            <pre><code><!-- Spin Wheel HTML Structure -->
+<div id="spinContainer">
+    <div id="wheel"></div>
+    <button id="spinButton">Spin</button>
+</div>
+<div id="spinResult"></div>
+
+<!-- JavaScript Logic -->
+
+</script></code></pre>
+        </div>
+        <button class="custom-button" onclick="showSpinWheelOutput()">Show Spin Wheel Output</button>
+        <button class="show-code-button" onclick="showCode('spinCode')">Show Code</button>
+        <div id="spinCode" class="code-display-area">
+            <!-- Spin Wheel HTML Structure -->
+            <div id="spinContainer">
+            <div id="wheel"></div>
+            <button id="spinButton">Spin</button>
+            </div>
+            <div id="spinResult"></div>
+
+            <!-- JavaScript Logic -->
+           
+        </div>
+        <div id="spinOutput" class="display-area">
+            <div id="spinContainer">
+                <div id="wheel"></div>
+                <button id="spinButton">Spin</button>
+            </div>
+            <div id="spinResult"></div>
+        </div>
+    </div>
+
+    <div id="about" class="section slide-in">
+        <h2>About This Learning Hub</h2>
+        <p>This learning hub demonstrates HTML, CSS, and JavaScript.</p>
+        <img src="https://placehold.co/600x300/009688/fff?text=About+the+Hub" alt="About the Hub">
+        <p>This project is for learning, demonstrating how HTML, CSS, and JavaScript work together.</p>
+        <h3>Technologies Used</h3>
+        <ul>
+            <li><strong>HTML.</strong></li>
+            <li><strong>CSS.</strong></li>
+            <li><strong>JavaScript.</strong></li>
+            <li><strong>Responsive Design.</strong></li>
+        </ul>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section.active').forEach(section => {
+                section.classList.remove('active');
+            });
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+        }
+
+        function showHtmlOutput() {
+            const outputDiv = document.getElementById('htmlOutput');
+            outputDiv.innerHTML = '<p>HTML output will appear here.</p>';
+        }
+
+        function showCssOutput() {
+            const outputDiv = document.getElementById('cssOutput');
+            outputDiv.innerHTML = '<p>CSS output will appear here.</p>';
+        }
+
+        function showJsOutput() {
+            const outputDiv = document.getElementById('jsOutput');
+            outputDiv.innerHTML = '<p>JavaScript output will appear here. Check the console!</p>';
+            console.log("Hello from JavaScript!");
+        }
+
+        function changeText() {
+            const dynamicText = document.getElementById('dynamicText');
+            if (dynamicText) {
+                dynamicText.textContent = "Text Changed by JavaScript!";
+            }
+        }
+
+
+        function showSpinWheelOutput() {
+            const outputDiv = document.getElementById('spinOutput');
+            outputDiv.innerHTML = `
+                <div id="spinContainer">
+                    <div id="wheel"></div>
+                    <button id="spinButton">Spin</button>
+                </div>
+                <div id="spinResult"></div>`;
+            initializeSpinWheel(); // Initialize spin wheel after showing its output
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.navbar-links-mobile');
+            mobileMenu.classList.toggle('active');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const closeToggle = document.querySelector('.close-toggle');
+            if (mobileMenu.classList.contains('active')) {
+                menuToggle.style.display = 'none';
+                closeToggle.style.display = 'block';
+            } else {
+                menuToggle.style.display = 'block';
+                closeToggle.style.display = 'none';
+            }
+        }
+
+        
+        const lightModeRadio = document.getElementById('lightMode');
+        const darkModeRadio = document.getElementById('darkMode');
+        const lightModeRadioMobile = document.getElementById('lightModeMobile');
+        const darkModeRadioMobile = document.getElementById('darkModeMobile');
+
+        function enableDarkMode() {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'enabled');
+        }
+
+        function disableDarkMode() {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+
+        function setRadioState(darkModeEnabled) {
+            lightModeRadio.checked = !darkModeEnabled;
+            darkModeRadio.checked = darkModeEnabled;
+            lightModeRadioMobile.checked = !darkModeEnabled;
+            darkModeRadioMobile.checked = darkModeEnabled;
+        }
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            enableDarkMode();
+            setRadioState(true);
+        } else {
+            disableDarkMode();
+            setRadioState(false);
+        }
+
+        lightModeRadio.addEventListener('change', function () {
+            disableDarkMode();
+            setRadioState(false);
+        });
+
+        darkModeRadio.addEventListener('change', function () {
+            enableDarkMode();
+            setRadioState(true);
+        });
+
+        lightModeRadioMobile.addEventListener('change', function () {
+            disableDarkMode();
+            setRadioState(false);
+        });
+
+        darkModeRadioMobile.addEventListener('change', function () {
+            enableDarkMode();
+            setRadioState(true);
+        });
+
+        let wheel, spinButton, spinResult, rotation, prizes; // Declare variables
+
+        function initializeSpinWheel() {
+            wheel = document.getElementById("wheel");
+            spinButton = document.getElementById("spinButton");
+            spinResult = document.getElementById("spinResult");
+            rotation = 0;
+            prizes = ["$1", "$5", "$10", "$25", "$50", "$100", "$200", "$500"];
+            spinButton.onclick = function () {
+                let spinDegree = Math.floor(Math.random() * (3600 - 3000 + 1)) + 3000;
+                rotation += spinDegree;
+                wheel.style.transform = "rotate(" + rotation + "deg)";
+
+                setTimeout(() => {
+                    let normalizedRotation = rotation % 360;
+                    let prizeIndex = Math.floor((360 - normalizedRotation) / (360 / prizes.length));
+                    if (prizeIndex >= prizes.length) {
+                        prizeIndex = 0;
+                    }
+                    spinResult.innerHTML = "You won " + prizes[prizeIndex] + "!";
+                }, 5000);
+            };
+        }
+
+        // Advanced CSS Examples Functions
+        function runFlexboxExample() {
+            const output = document.getElementById('flexbox-output');
+            output.innerHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+                    <div style="width: 50px; height: 50px; background-color: lightblue; margin: 10px;"></div>
+                    <div style="width: 50px; height: 50px; background-color: lightblue; margin: 10px;"></div>
+                </div>`;
+        }
+
+        function runGridExample() {
+            const output = document.getElementById('grid-output');
+            output.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <div style="background-color: lightcoral; padding: 20px; text-align: center;">1</div>
+                    <div style="background-color: lightcoral; padding: 20px; text-align: center;">2</div>
+                    <div style="background-color: lightcoral; padding: 20px; text-align: center;">3</div>
+                    <div style="background-color: lightcoral; padding: 20px; text-align: center;">4</div>
+                    <div style="background-color: lightcoral; padding: 20px; text-align: center;">5</div>
+                    <div style="background-color: lightcoral; padding: 20px; text-align: center;">6</div>
+                </div>`;
+        }
+
+        function runTransitionsExample() {
+            const output = document.getElementById('transitions-output');
+            output.innerHTML = `<div style="width: 100px; height: 100px; background-color: lightgreen; transition: all 0.5s ease;">Hover me!</div>`;
+        }
+
+        function runTransformsExample() {
+            const output = document.getElementById('transforms-output');
+            output.innerHTML = `<div style="width: 100px; height: 100px; background-color: lightyellow; transform: rotate(45deg);">Transform Me!</div>`;
+        }
+
+        function runPseudoExample() {
+            const output = document.getElementById('pseudo-output');
+            output.innerHTML = `<a href="#" style="color: blue;">Hover over me</a><p style="font-size: 18px;">This is a paragraph. The first line will be bold.</p>`;
+        }
+
+        function runResponsiveExample() {
+            const output = document.getElementById('responsive-output');
+            output.innerHTML = `<p>Resize the window to see responsive changes.</p>`;
+        }
+
+        function runVariablesExample() {
+            const output = document.getElementById('variables-output');
+            output.innerHTML = `<h1 style="color: var(--primary-color);">CSS Variables Example</h1>`;
+        }
+        function runAnimationExample() {
+            const output = document.getElementById('animation-output');
+            output.innerHTML = `
+            <div style="width:100px; height:100px; background-color:lightblue; animation:slide 2s infinite alternate;"></div>
+            `;
+        }
+
+        function showCode(codeId) {
+            const codeDisplayArea = document.getElementById(codeId);
+            codeDisplayArea.classList.toggle('show');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            showSection('html');
+            // Initialize spin wheel
+            showSpinWheelOutput();
+        });
+    </script>
+    <script> function appendToDisplay(value) {
+        document.getElementById('display').value += value;
+    }
+//clear buttoon
+function clearDisplay() {
+  document.getElementById('display').value = '';
+}
+
+function backspace() {
+  let currentValue = document.getElementById('display').value;
+  document.getElementById('display').value = currentValue.slice(0, -1);
+}
+function negate() {
+    let currentValue = document.getElementById('display').value;
+    if (currentValue) {
+        if (currentValue[0] === '-') {
+            document.getElementById('display').value = currentValue.slice(1);
+        } else {
+            document.getElementById('display').value = '-' + currentValue;
+        }
+    }
+}
+ function calculateSin() {
+    let currentValue = document.getElementById('display').value;
+    let number = parseFloat(currentValue);
+
+    if (!isNaN(number)) {
+         document.getElementById('display').value = Math.sin(number * Math.PI / 180);
+    } else {
+        document.getElementById('display').value = 'Error';
+    }
+}
+function calculateCos() {
+  let currentValue = document.getElementById('display').value;
+  let number = Number(currentValue);
+  document.getElementById('display').value = Math.cos(number * Math.PI / 180);
+}
+
+function calculateTan() {
+  let currentValue = document.getElementById('display').value;
+  let number = Number(currentValue);
+  document.getElementById('display').value = Math.tan(number * Math.PI / 180);
+}
+
+function calculateLog() {
+    try {
+        const value = parseFloat(document.getElementById('display').value);
+        if (value > 0) {
+            document.getElementById('display').value = Math.log10(value);
+        } else {
+            document.getElementById('display').value = 'Error';
+        }
+    } catch (error) {
+        document.getElementById('display').value = 'Error';
+    }
+}
+function calculatePower() {
+    appendToDisplay('^');
+}
+
+function calculateFactorial() {
+    try {
+        let currentValue = document.getElementById('display').value;
+        let number = Number(currentValue);
+        if (Number.isInteger(number) && number >= 0) {
+            let result = 1;
+            for (let i = 2; i <= number; i++) {
+                result *= i;
+            }
+            document.getElementById('display').value = result;
+        } else {
+            document.getElementById('display').value = 'Error: Integer >= 0 required';
+        }
+    } catch (error) {
+        document.getElementById('display').value = 'Error';
+    }
+}
+function openParenthesis() {
+    appendToDisplay('(');
+}
+
+function closeParenthesis() {
+    appendToDisplay(')');
+}
+function calculateSquareRoot() {
+    try {
+        const value = parseFloat(document.getElementById('display').value);
+        if (value >= 0) {
+            document.getElementById('display').value = Math.sqrt(value);
+        } else {
+            document.getElementById('display').value = 'Error';
+        }
+    } catch (error) {
+        document.getElementById('display').value = 'Error';
+    }
+}
+
+function calculate() {
+  try {
+    let expression = document.getElementById('display').value;
+    expression = expression.replace(/\^/g, '**');
+
+    // Function to safely evaluate mathematical expressions
+    function safeEval(expression) {
+      return new Function('return ' + expression)();
+    }
+
+    let result = safeEval(expression);
+
+    if (isNaN(result) || !isFinite(result)) {
+      document.getElementById('display').value = "Error";
+    } else {
+      document.getElementById('display').value = result;
+    }
+  } catch (e) {
+    document.getElementById('display').value = "Error";
+  }
+}</script>
+</body>
+
+</html>

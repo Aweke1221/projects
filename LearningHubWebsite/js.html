@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Learning Platform</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background: #f0f0f0;
+        }
+
+        .sidebar {
+            background: #333;
+            color: white;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            width: 0;
+            overflow-x: hidden;
+            transition: width 0.3s ease, left 0.3s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            border-right: 2px solid #555;
+        }
+
+        .sidebar.active {
+            width: 250px;
+            left: 0;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #4CAF50;
+            display: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+        }
+
+        .sidebar.active h2,
+        .sidebar.active ul {
+            display: block;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            width: 200px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .sidebar ul li a:hover {
+            background: #555;
+            transform: translateX(5px) scale(1.05);
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar ul li ul {
+            margin-left: 15px;
+            display: none;
+            border-left: 1px solid #777;
+            padding-left: 10px;
+        }
+
+        .sidebar ul li.active ul {
+            display: block;
+        }
+
+        .main-content {
+          top: 100px;
+            flex: 1;
+            padding: 20px;
+            background: #fff;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            border-radius: 10px;
+            margin: 30px;
+            margin-top: 70px;
+            margin-left: 20px;
+        }
+
+        .main-content:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .definition {
+
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-box {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-box textarea {
+            width: 100%;
+            height: 150px;
+            font-family: 'Courier New', monospace;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            background: #fff;
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-box button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-box button:hover {
+            background: #45a049;
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4);
+        }
+
+        .output {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-drive-button {
+            margin-left: 300px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 11;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .menu-drive-button:hover {
+            background-color: #45a049;
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+              margin-top: 15px;
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                border-right: none;
+            }
+
+            .main-content {
+                padding: 10px;
+                box-shadow: none;
+                margin: 5px;
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="menu-drive-button" onclick="toggleSidebar()">Menu Drive</button>
+ 
+    <div class="sidebar">
+        <h2>JavaScript Topics</h2>
+        
+        <ul>
+            <a href="techno.html" id="learn" ><button class="learn">Return Back</button></a>
+            </a>
+            <li data-section="variables">
+                <a href="#variables" data-topic="variables">Variables</a>
+                <ul>
+                    <li><a href="#var" data-topic="var">var</a></li>
+                    <li><a href="#let" data-topic="let">let</a></li>
+                    <li><a href="#const" data-topic="const">const</a></li>
+                </ul>
+            </li>
+            <li data-section="data-types"><a href="#data-types" data-topic="data-types">Data Types</a>
+            </li>
+            <li data-section="functions"><a href="#functions" data-topic="functions">Functions</a>
+                <ul>
+                    <li><a href="#function-declaration" data-topic="function-declaration">Function Declaration</a></li>
+                    <li><a href="#arrow-functions" data-topic="arrow-functions">Arrow Functions</a></li>
+                </ul>
+            </li>
+            <li data-section="control-flow"><a href="#control-flow" data-topic="control-flow">Control Flow</a>
+                <ul>
+                    <li><a href="#if-else" data-topic="if-else">if/else</a></li>
+                    <li><a href="#for-loop" data-topic="for-loop">for Loop</a></li>
+                    <li><a href="#while-loop" data-topic="while-loop">while Loop</a></li>
+                    <li><a href="#switch" data-topic="switch">switch</a></li>
+                </ul>
+            </li>
+            <li data-section="objects"><a href="#objects" data-topic="objects">Objects</a>
+            </li>
+            <li data-section="arrays"><a href="#arrays" data-topic="arrays">Arrays</a>
+            </li>
+            <li data-section="events"><a href="#events" data-topic="events">Events</a>
+            </li>
+            <li data-section="async-js"><a href="#async-js" data-topic="async-js">Asynchronous JS</a>
+                <ul>
+                    <li><a href="#callbacks" data-topic="callbacks">Callbacks</a></li>
+                    <li><a href="#promises" data-topic="promises">Promises</a></li>
+                    <li><a href="#async-await" data-topic="async-await">async/await</a></li>
+                </ul>
+            </li>
+            <li data-section="dom-manipulation"><a href="#dom-manipulation" data-topic="dom-manipulation">DOM Manipulation</a>
+            </li>
+            <li data-section="es6-features"><a href="#es6-features" data-topic="es6-features">ES6 Features</a>
+                <ul>
+                    <li><a href="#arrow-functions" data-topic="arrow-functions">Arrow Functions</a></li>
+                    <li><a href="#template-literals" data-topic="template-literals">Template Literals</a></li>
+                    <li><a href="#destructuring" data-topic="destructuring">Destructuring</a></li>
+                    <li><a href="#spread-rest" data-topic="spread-rest">Spread/Rest Operator</a></li>
+                </ul>
+            </li>
+            <li data-section="modules"><a href="#modules" data-topic="modules">Modules</a>
+            </li>
+            <li data-section="closures"><a href="#closures" data-topic="closures">Closures</a>
+            </li>
+            <li data-section="scope"><a href="#scope" data-topic="scope">Scope</a>
+            </li>
+            <li data-section="hoisting"><a href="#hoisting" data-topic="hoisting">Hoisting</a>
+            </li>
+            <li data-section="prototypes"><a href="#prototypes" data-topic="prototypes">Prototypes</a>
+            </li>
+            <li data-section="error-handling"><a href="#error-handling" data-topic="error-handling">Error Handling</a>
+            </li>
+            <li data-section="this-keyword"><a href="#this-keyword" data-topic="this-keyword">This Keyword</a>
+            </li>
+            <li data-section="classes"><a href="#classes" data-topic="classes">Classes</a>
+            </li>
+            <li data-section="inheritance"><a href="#inheritance" data-topic="inheritance">Inheritance</a>
+            </li>
+            <li data-section="event-loop"><a href="#event-loop" data-topic="event-loop">Event Loop</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1 id="topic-title">JavaScript Learning Platform</h1>
+        <div id="content">
+            <p>Select a topic from the sidebar to learn more.</p>
+        </div>
+    </div>
+
+    <script>
+        const topics = {
+            variables: {
+                title: "Variables",
+                description: `Variables are fundamental building blocks in JavaScript used to store and manage data. 
+              They act as labeled containers in the computer's memory where you can hold different types of information, such as numbers, text, or more complex data structures.
+              `,
+                details: `
+            In JavaScript, variables are declared using keywords like 'var', 'let', and 'const'. 
+            Each has distinct scoping rules and behaviors that dictate how and where the variable can be accessed and modified within your code.
+            `,
+                code: `let message = "Hello, world!";
+const apiKey = "YOUR_API_KEY";
+var counter = 0;`
+            },
+            var: {
+                title: "var",
+                description: `The 'var' keyword is the oldest method for declaring variables in JavaScript. 
+              Variables declared with 'var' are function-scoped, meaning they are accessible throughout the function in which they are declared, regardless of block scope.`,
+                details: `
+            One notable characteristic of 'var' is its behavior related to hoisting. Variables declared with 'var' are hoisted to the top of their scope, meaning they can be used before they are declared. However, they are initialized with a value of 'undefined' until the line where they are assigned a value is executed.
+            `,
+                code: `function exampleVar() {
+  console.log(x);
+  var x = 10;
+  console.log(x);
+}
+exampleVar();`
+            },
+            let: {
+                title: "let",
+                description: `The 'let' keyword was introduced in ECMAScript 2015 (ES6) as a modern alternative to 'var'. 
+              Variables declared with 'let' are block-scoped, meaning their visibility is limited to the block in which they are defined (e.g., inside an 'if' statement or a loop).`,
+                details: `
+            Unlike 'var', 'let' does not allow variables to be used before they are declared, resulting in a ReferenceError if you try to access a 'let' variable before its declaration in the code.
+            `,
+                code: `function exampleLet() {
+  let y = 20;
+  console.log(y);
+}
+exampleLet();`
+            },
+            const: {
+                title: "const",
+                description: `The 'const' keyword is used to declare constants, which are variables whose values cannot be reassigned once they are assigned an initial value. Like 'let', 'const' is also block-scoped.`,
+                details: `
+            'const' does not mean the value is immutable, especially when dealing with objects or arrays. It only means the variable identifier cannot be reassigned to a different memory address.
+            `,
+                code: `function exampleConst() {
+  const PI = 3.14159;
+  console.log(PI);
+  const person = { name: "John" };
+  person.name = "Jane";
+  console.log(person.name);
+}
+exampleConst();`
+            },
+            "data-types": {
+                title: "Data Types",
+                description: `Data types are classifications that specify which type of value a variable has and what type of operations can be performed on it. JavaScript is dynamically typed, so you don't need to declare the data type of a variable explicitly; it's inferred at runtime.`,
+                details: `JavaScript has several primitive data types such as:
+- Number: Represents numeric values.
+- String: Represents sequences of characters.
+- Boolean: Represents 'true' or 'false' values.
+- Null: Represents the intentional absence of any object value.
+- Undefined: Represents a variable that has been declared but has not been assigned a value.
+- Symbol: Represents unique identifiers (introduced in ES6).`,
+                code: `let age = 30;
+let name = "John";
+let isStudent = true;
+let nothing = null;
+let notDefined;
+let uniqueKey = Symbol("key");
+
+let person = { name: "John", age: 30 };
+let fruits = ["apple", "banana", "orange"];`
+            },
+            functions: {
+                title: "Functions",
+                description: `Functions are reusable blocks of code that perform a specific task. They are one of the fundamental building blocks in JavaScript and are used to structure code into manageable and modular units.`,
+                details: `Functions can be defined in two primary ways:
+- Function Declarations
+- Function Expressions`,
+                code: `function add(a, b) {
+  return a + b;
+}
+
+const multiply = function(a, b) {
+  return a * b;
+};
+
+console.log(add(5, 3));
+console.log(multiply(4, 6));`
+            },
+            "function-declaration": {
+                title: "Function Declaration",
+                description: `A function declaration defines a named function using the 'function' keyword. Function declarations are hoisted to the top of their scope, meaning they can be called before they appear in the code.`,
+                details: `Function declarations are suitable for scenarios where you need a well-defined function with a consistent behavior and need to call it before its declaration.`,
+                code: `greet("World");
+
+function greet(name) {
+  console.log("Hello, " + name + "!");
+}`
+            },
+            "arrow-functions": {
+                title: "Arrow Functions",
+                description: `Arrow functions provide a more concise syntax for writing function expressions. They are particularly useful for short, inline functions and have some differences in 'this' binding compared to regular functions.`,
+                details: `Arrow functions are commonly used in functional programming techniques and when brevity is desired. They do not have their own 'this' context, which can be useful in certain scenarios.`,
+                code: `const square = (number) => number * number;
+console.log(square(5));
+
+const greet = (name) => {
+  console.log("Hello, " + name + "!");
+};
+greet("Arrow Function");`
+            },
+            "control-flow": {
+                title: "Control Flow",
+                description: `Control flow statements determine the order in which code is executed based on specified conditions. These statements allow you to create branching logic and iterative loops in your code.`,
+                details: `JavaScript supports several types of control flow statements:
+- if/else: Executes different code blocks based on a condition.
+- for loop: Repeats a block of code a specific number of times.
+- while loop: Repeats a block of code as long as a condition is true.
+- switch statement: Chooses one of many code blocks to execute.`,
+                code: ``
+            },
+            "if-else": {
+                title: "if/else",
+                description: `The if/else statement executes a block of code if a condition is true; otherwise, it executes another block of code.`,
+                details: `The if/else statement allows you to make decisions in your code based on conditions. It can also include multiple 'else if' branches for more complex conditional logic.`,
+                code: `let age = 20;
+
+if (age >= 18) {
+  console.log("You are an adult.");
+} else {
+  console.log("You are a minor.");
+}`
+            },
+            "for-loop": {
+                title: "for Loop",
+                description: `The for loop is used to repeat a block of code a specific number of times. It consists of three parts: initialization, condition, and increment/decrement.`,
+                details: `The for loop is useful when you know the number of iterations in advance. You can control how many times the loop runs by specifying a condition.`,
+                code: `for (let i = 0; i < 5; i++) {
+  console.log("Iteration:", i);
+}`
+            },
+            "while-loop": {
+                title: "while Loop",
+                description: `The while loop is used to repeat a block of code as long as a condition is true. Unlike the for loop, the number of iterations is not known in advance.`,
+                details: `The while loop is useful when you need to repeat a block of code until a certain condition is met. Make sure to update the condition within the loop to avoid an infinite loop.`,
+                code: `let count = 0;
+
+while (count < 5) {
+  console.log("Count:", count);
+  count++;
+}`
+            },
+            switch: {
+                title: "switch",
+                description: `The switch statement allows you to choose one of many code blocks to execute based on the value of a variable.`,
+                details: `The switch statement provides an alternative to using multiple 'if' statements for handling different cases. Each case is compared to the value of the variable, and the corresponding code block is executed.`,
+                code: `let day = "Monday";
+
+switch (day) {
+  case "Monday":
+    console.log("It's Monday.");
+    break;
+  case "Tuesday":
+    console.log("It's Tuesday.");
+    break;
+  default:
+    console.log("It's another day.");
+}`
+            },
+            objects: {
+                title: "Objects",
+                description: "Objects are collections of key-value pairs. They are used to store and organize complex data structures in JavaScript.",
+                details: `Objects allow you to represent real-world entities with properties and behaviors. Each property consists of a key (name) and a value.`,
+                code: `let person = {
+  name: "John",
+  age: 30,
+  isStudent: false,
+  address: {
+    street: "123 Main St",
+    city: "Anytown"
+  }
+};
+
+console.log(person.name);
+console.log(person.address.city);`
+            },
+            arrays: {
+                title: "Arrays",
+                description: "Arrays are ordered lists of values. They are used to store multiple values in a single variable.",
+                details: `Arrays can hold elements of any data type, including numbers, strings, objects, and even other arrays. Elements in an array are accessed using their index, starting from 0.`,
+                code: `let fruits = ["apple", "banana", "orange"];
+
+console.log(fruits[0]);
+console.log(fruits.length);
+fruits.push("grape");
+console.log(fruits);`
+            },
+            events: {
+                title: "Events",
+                description: "Events are actions or occurrences that happen in the browser, such as clicks, keypresses, or page loads. They are used to make web pages interactive.",
+                details: `JavaScript allows you to respond to events by attaching event listeners to HTML elements. When an event occurs, the specified function (event handler) is executed.`,
+                code: `let button = document.getElementById("myButton");
+
+button.addEventListener("click", function() {
+  console.log("Button clicked!");
+});`
+            },
+            "async-js": {
+                title: "Asynchronous JS",
+                description: "Asynchronous JavaScript allows you to perform tasks without blocking the main thread, ensuring that the user interface remains responsive.",
+                details: `Asynchronous operations are commonly used for tasks like fetching data from a server or performing long-running computations. JavaScript provides several mechanisms for handling asynchronous code, including callbacks, promises, and async/await.`,
+                code: ``
+            },
+            callbacks: {
+                title: "Callbacks",
+                description: "A callback is a function passed as an argument to another function and executed after some operation has completed.",
+                details: `Callbacks are often used in asynchronous JavaScript to handle the result of an operation once it's finished. They allow you to specify what should happen after the operation is complete.`,
+                code: `function fetchData(callback) {
+  setTimeout(function() {
+    let data = "Data loaded";
+    callback(data);
+  }, 1000);
+}
+
+fetchData(function(result) {
+  console.log("Result:", result);
+});`
+            },
+            promises: {
+                title: "Promises",
+                description: "A promise is an object representing the eventual completion (or failure) of an asynchronous operation. It provides a cleaner and more structured way to handle asynchronous code compared to callbacks.",
+                details: `A promise has three states: pending, fulfilled (resolved), and rejected. You can attach callbacks to a promise using the then() method to handle the result and the catch() method to handle errors.`,
+                code: `function fetchData() {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      let data = "Data loaded";
+      resolve(data);
+    }, 1000);
+  });
+}
+
+fetchData()
+  .then(function(result) {
+    console.log("Result:", result);
+  })
+  .catch(function(error) {
+    console.log("Error:", error);
+  });`
+            },
+            "async-await": {
+                title: "async/await",
+                description: "Async/await is syntactic sugar for working with promises, making asynchronous code look and behave a bit more like synchronous code. It's designed to make async code easier to read and write.",
+                details: `The 'async' keyword is used to define a function that returns a promise. Inside an async function, you can use the 'await' keyword to pause execution until a promise is resolved.`,
+                code: `async function fetchData() {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      let data = "Data loaded";
+      resolve(data);
+    }, 1000);
+  });
+}
+
+async function processData() {
+  try {
+    let result = await fetchData();
+    console.log("Result:", result);
+  } catch (error) {
+    console.log("Error:", error);
+  }
+}
+
+processData();`
+            },
+            "dom-manipulation": {
+                title: "DOM Manipulation",
+                description: "DOM manipulation involves modifying the structure and content of a webpage using JavaScript. It allows you to dynamically update the user interface based on user interactions or data changes.",
+                details: `You can access HTML elements using methods like 'getElementById', 'querySelector', and 'querySelectorAll', and modify their content, attributes, and styles.`,
+                code: `let div = document.getElementById("myDiv");
+
+div.innerHTML = "Hello, DOM!";
+div.style.backgroundColor = "lightblue";`
+            },
+            "es6-features": {
+                title: "ES6 Features",
+                description: "ES6 (ECMAScript 2015) introduced many new features to JavaScript, making the language more powerful and developer-friendly.",
+                details: `ES6 included notable features such as:
+- Arrow functions
+- Template literals
+- Destructuring
+- Spread/rest operator
+- Classes and modules`,
+                code: ``
+            },
+        };
+
+        const sidebar = document.querySelector('.sidebar');
+        const listItems = document.querySelectorAll('.sidebar ul li');
+        const menuDriveButton = document.querySelector('.menu-drive-button');
+
+        function loadTopic(topicId) {
+            const topic = topics[topicId];
+            const contentDiv = document.getElementById("content");
+            const titleDiv = document.getElementById("topic-title");
+
+            if (topic) {
+                titleDiv.textContent = topic.title;
+                contentDiv.innerHTML = `
+          <div class="definition">
+            <p>${topic.description}</p>
+            ${topic.details ? `<p>${topic.details}</p>` : ''}
+          </div>
+          ${topic.code ? `
+            <div class="code-box">
+              <textarea id="code-${topicId}">${topic.code}</textarea>
+              <button onclick="runCode('${topicId}')">Run Code</button>
+              <div class="output" id="output-${topicId}"></div>
+            </div>
+          ` : ""}
+        `;
+            } else {
+                contentDiv.innerHTML = `<p>Topic not found.</p>`;
+            }
+        }
+
+        function runCode(topicId) {
+            const code = document.getElementById(`code-${topicId}`).value;
+            const outputDiv = document.getElementById(`output-${topicId}`);
+
+            try {
+                const originalLog = console.log;
+                let output = "";
+                console.log = (...args) => {
+                    output += args.join(" ") + "\n";
+                };
+
+                eval(code);
+
+                console.log = originalLog;
+                outputDiv.textContent = output;
+            } catch (error) {
+                outputDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        function collapseSidebar() {
+            sidebar.classList.remove('active');
+            sidebar.style.width = '0';
+            sidebar.style.left = '0';
+            menuDriveButton.textContent = "Menu Drive";
+            listItems.forEach(li => li.classList.remove('active'));
+            // Make sure sub list is display one one call otherwise when you reload the sublist will display
+            const subList = document.querySelectorAll('.sidebar ul li ul');
+            subList.forEach(sub => sub.style.display = 'none');
+
+        }
+
+        listItems.forEach(item => {
+            const link = item.querySelector('a');
+            if (link) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    listItems.forEach(li => li.classList.remove('active'));
+                    item.classList.add('active');
+
+                    // Make sure display the current one and hide the other
+                    const subList = document.querySelectorAll('.sidebar ul li ul');
+                    subList.forEach(sub => sub.style.display = 'none');
+                    const parent = item.querySelector('ul')
+                    if (parent) {
+                        parent.style.display = 'block';
+                    }
+                    const topicId = link.getAttribute('data-topic');
+                    loadTopic(topicId);
+                });
+            }
+        });
+
+        function toggleSidebar() {
+            if (sidebar.classList.contains('active')) {
+                collapseSidebar();
+            } else {
+                sidebar.classList.add('active');
+                sidebar.style.width = '250px';
+                sidebar.style.left = '0';
+                menuDriveButton.textContent = "X";
+            }
+        }
+        // Make sure Variables load in start
+        loadTopic('variables');
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Learning Platform</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #333;
+            --text-color: #333;
+            --background-color: #f0f0f0;
+            --light-background-color: #fff;
+            --code-background-color: #f0f0f0;
+            --sidebar-width: 280px;
+            --transition-duration: 0.3s;
+            --box-shadow-color: rgba(0, 0, 0, 0.2);
+            --hover-box-shadow-color: rgba(0, 0, 0, 0.4);
+            --menu-button-size: 40px;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --border-radius: 8px;
+            --menu-icon-size: 24px;
+            /* Theme variables */
+            --body-bg: #f0f0f0;
+            --body-text-color: #333;
+            --card-bg: #fff;
+            --card-text-color: #333;
+            --code-bg: #f0f0f0;
+        }
+
+        /* Dark theme variables */
+        body.dark-theme {
+            --body-bg: #333;
+            --body-text-color: #f0f0f0;
+            --card-bg: #444;
+            --card-text-color: #f0f0f0;
+            --code-bg: #555;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background: var(--body-bg);
+            color: var(--body-text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar {
+            background: var(--secondary-color);
+            color: white;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 5px 0 15px var(--box-shadow-color);
+            width: 0;
+            overflow-x: hidden;
+            transition: width var(--transition-duration) ease, left var(--transition-duration) ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            border-right: 2px solid #555;
+        }
+
+        .sidebar.active {
+            width: var(--sidebar-width);
+            left: 0;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            display: none;
+            text-shadow: 2px 2px 4px var(--hover-box-shadow-color);
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+        }
+
+        .sidebar.active h2,
+        .sidebar.active ul {
+            display: block;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            transition: background var(--transition-duration), transform 0.2s, box-shadow var(--transition-duration);
+            width: calc(var(--sidebar-width) - 40px);
+            box-shadow: 1px 1px 3px var(--box-shadow-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar ul li a:hover {
+            background: #555;
+            transform: translateX(5px) scale(1.02);
+            box-shadow: 3px 3px 7px var(--hover-box-shadow-color);
+        }
+
+        .sidebar ul li ul {
+            margin-left: 15px;
+            display: none;
+            border-left: 1px solid #777;
+            padding-left: 10px;
+        }
+
+        .sidebar ul li.active ul {
+            display: block;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: var(--card-bg);
+            color: var(--card-text-color);
+            overflow-y: auto;
+            box-shadow: 0 4px 8px var(--box-shadow-color);
+            position: relative;
+            border-radius: var(--border-radius);
+            margin: 30px;
+            margin-top: 70px;
+            margin-left: 20px;
+        }
+
+        .main-content:hover {
+            box-shadow: 0 8px 16px var(--hover-box-shadow-color);
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+            color: var(--text-color);
+            text-shadow: 2px 2px 4px var(--box-shadow-color);
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .definition {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            box-shadow: 2px 2px 5px var(--box-shadow-color);
+        }
+
+        .code-editor-container {
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 2px 2px 5px var(--box-shadow-color);
+        }
+
+        .code-editor {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            box-sizing: border-box;
+            background-color: var(--code-bg);
+            color: var(--text-color);
+            padding: 15px;
+            min-height: 200px;
+            outline: none;
+            tab-size: 4;
+        }
+
+        .code-editor:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-editor-buttons {
+            padding: 10px;
+            background-color: #eee;
+            border-bottom-left-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .code-editor-buttons button {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background var(--transition-duration), box-shadow var(--transition-duration);
+            box-shadow: 2px 2px 5px var(--box-shadow-color);
+            font-size: 14px;
+        }
+
+        .code-editor-buttons button:hover {
+            background: #45a049;
+            box-shadow: 3px 3px 7px var(--hover-box-shadow-color);
+        }
+
+        .output {
+            margin-top: 15px;
+            padding: 12px;
+            background: var(--light-background-color);
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            box-shadow: 1px 1px 3px var(--box-shadow-color);
+            font-size: 14px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .output a {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .output a:hover {
+            color: red;
+        }
+
+        .output .key-red {
+            color: red;
+        }
+
+        .output .key-green {
+            color: green;
+        }
+
+        .menu-drive-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: var(--menu-button-size);
+            height: var(--menu-button-size);
+            cursor: pointer;
+            font-size: 0;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 11;
+            border-radius: 50%;
+            box-shadow: 2px 2px 5px var(--box-shadow-color);
+            transition: background-color var(--transition-duration), box-shadow var(--transition-duration);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+        }
+
+        .menu-drive-button:hover {
+            background-color: #45a049;
+            box-shadow: 3px 3px 7px var(--hover-box-shadow-color);
+        }
+
+        .menu-drive-button::before {
+            content: '\2630';
+            font-size: var(--menu-icon-size);
+            color: white;
+            transition: content var(--transition-duration);
+        }
+
+        .sidebar.active .menu-drive-button::before {
+            content: '\2715';
+        }
+
+        /* New Styles for Two-Column Layout and Dark/Light Theme Toggle */
+        .main-content-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column; /* Stack on small screens */
+            align-items: center; /* Center horizontally on large screens */
+        }
+
+        .topic-section {
+            width: 100%; /* Full width on small screens */
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        /* Add a label for accessibility */
+        .theme-toggle label {
+            display: inline-block;
+            margin-right: 10px;
+            color: var(--text-color);
+        }
+
+        /* Hide the actual radio buttons */
+        .theme-toggle input[type="radio"] {
+            display: none;
+        }
+
+        /* Style the radio button labels */
+        .theme-toggle label span {
+            padding: 5px 10px;
+            border: 1px solid var(--secondary-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Highlight the selected radio button */
+        .theme-toggle input[type="radio"]:checked+span {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Media query for larger screens */
+        @media (min-width: 769px) {
+            .main-content-container {
+                flex-direction: row; /* Two columns on large screens */
+                justify-content: center; /* Center columns */
+                align-items: flex-start; /* Align items to the top */
+                max-width: 1200px; /* Maximum width for the container */
+                margin: 0 auto; /* Center the container */
+            }
+
+            .topic-section {
+                width: 50%; /* 50% width for each column */
+                padding: 15px;
+                box-sizing: border-box; /* Include padding in width calculation */
+            }
+        }
+
+        /* Responsive Styles (Keep your existing styles) */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 40%;
+                height: auto;
+                box-shadow: none;
+                border-right: none;
+                position: static;
+                z-index: 1;
+            }
+
+            .sidebar.active {
+                width: 40%;
+            }
+
+            .main-content {
+                padding: 20px;
+                box-shadow: none;
+                margin: 10px;
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+
+            .menu-drive-button {
+                position: fixed;
+                top: 10px;
+                left: 10px;
+            }
+        }
+
+        /* Utility Classes (Keep your existing styles) */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Animations (Keep your existing styles) */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Enhanced Typography (Keep your existing styles) */
+        p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        /* Improved Link Styles (Keep your existing styles) */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-duration);
+        }
+
+        a:hover {
+            color: darken(var(--primary-color), 10%);
+        }
+
+        .learn {
+            color: white;
+            left: 50px;
+            align-items: center;
+            background-color: blue;
+            align-items: center;
+            height: 50px;
+            padding-top: 5px;
+            margin-left: 100px;
+            margin-bottom: 100px;
+            left: 50%;
+            bottom: 100px;
+            align-items: center;
+            border-radius: 10px;
+            font-size: 2rem;
+            padding: 20px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <button class="menu-drive-button" onclick="toggleSidebar()"></button>
+
+    <div class="sidebar">
+        <h2>CSS Topics</h2>
+        <ul>
+            <a href="techno.html" id="learn" class="learn">Return Back</a>
+            <li data-section="selectors">
+                <a href="#selectors" data-topic="selectors">
+                    <i class="fas fa-mouse-pointer"></i>
+                    Selectors
+                </a>
+            </li>
+            <li data-section="properties">
+                <a href="#properties" data-topic="properties">
+                    <i class="fas fa-palette"></i>
+                    Properties
+                </a>
+            </li>
+            <li data-section="values">
+                <a href="#values" data-topic="values">
+                    <i class="fas fa-calculator"></i>
+                    Values
+                </a>
+            </li>
+            <li data-section="box-model">
+                <a href="#box-model" data-topic="box-model">
+                    <i class="fas fa-box"></i>
+                    Box Model
+                </a>
+            </li>
+            <li data-section="layout">
+                <a href="#layout" data-topic="layout">
+                    <i class="fas fa-columns"></i>
+                    Layout
+                </a>
+            </li>
+            <li data-section="flexbox">
+                <a href="#flexbox" data-topic="flexbox">
+                    <i class="fab fa-css3"></i>
+                    Flexbox
+                </a>
+            </li>
+            <li data-section="grid">
+                <a href="#grid" data-topic="grid">
+                    <i class="fas fa-th"></i>
+                    Grid
+                </a>
+            </li>
+            <li data-section="positioning">
+                <a href="#positioning" data-topic="positioning">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Positioning
+                </a>
+            </li>
+            <li data-section="margin">
+                <a href="#margin" data-topic="margin">
+                    <i class="fas fa-arrows-alt"></i>
+                    Margin
+                </a>
+            </li>
+            <li data-section="padding">
+                <a href="#padding" data-topic="padding">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                    Padding
+                </a>
+            </li>
+            <li data-section="borders">
+                <a href="#borders" data-topic="borders">
+                    <i class="fas fa-border-style"></i>
+                    Borders
+                </a>
+            </li>
+            <li data-section="typography">
+                <a href="#typography" data-topic="typography">
+                    <i class="fas fa-font"></i>
+                    Typography
+                </a>
+            </li>
+            <li data-section="colors">
+                <a href="#colors" data-topic="colors">
+                    <i class="fas fa-tint"></i>
+                    Colors
+                </a>
+            </li>
+            <li data-section="backgrounds">
+                <a href="#backgrounds" data-topic="backgrounds">
+                    <i class="fas fa-image"></i>
+                    Backgrounds
+                </a>
+            </li>
+            <li data-section="transitions">
+                <a href="#transitions" data-topic="transitions">
+                    <i class="fas fa-sync-alt"></i>
+                    Transitions
+                </a>
+            </li>
+            <li data-section="animations">
+                <a href="#animations" data-topic="animations">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Animations
+                </a>
+            </li>
+            <li data-section="media-queries">
+                <a href="#media-queries" data-topic="media-queries">
+                    <i class="fas fa-mobile-alt"></i>
+                    Media Queries
+                </a>
+            </li>
+            <li data-section="specificity">
+                <a href="#specificity" data-topic="specificity">
+                    <i class="fas fa-sort-amount-up"></i>
+                    Specificity
+                </a>
+            </li>
+            <li data-section="cascade">
+                <a href="#cascade" data-topic="cascade">
+                    <i class="fas fa-stream"></i>
+                    Cascade
+                </a>
+            </li>
+            <li data-section="pseudo-classes">
+                <a href="#pseudo-classes" data-topic="pseudo-classes">
+                    <i class="fas fa-clone"></i>
+                    Pseudo-classes
+                </a>
+            </li>
+            <li data-section="pseudo-elements">
+                <a href="#pseudo-elements" data-topic="pseudo-elements">
+                    <i class="far fa-clone"></i>
+                    Pseudo-elements
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <label>
+            <input type="radio" name="theme" value="light" checked>
+            <span>Light</span>
+        </label>
+        <label>
+            <input type="radio" name="theme" value="dark">
+            <span>Dark</span>
+        </label>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content-container">
+        <div class="topic-section">
+            <h1 id="topic-title">CSS Learning Platform</h1>
+            <div id="content"></div>
+        </div>
+        <div class="topic-section">
+            <div id="code-example"></div>
+        </div>
+    </div>
+
+    <script>
+        const topics = {
+            selectors: {
+                title: "Selectors",
+                description: `CSS selectors are patterns used to select the HTML elements you want to style.`,
+                details: `Selectors can target elements by:
+           - Tag name (e.g., 'p')
+           - Class name (e.g., '.my-class')
+           - ID (e.g., '#my-id')
+           - Attributes (e.g., '[type="text"]')`,
+                code: `p {
+         font-size: 16px;
+       }
+
+       .my-class {
+         color: blue;
+       }
+
+       #my-id {
+         font-weight: bold;
+       }`,
+                exampleHTML: `<p class="my-class" id="my-id">This is a paragraph.</p>`,
+            },
+            properties: {
+                title: "Properties",
+                description: `CSS properties define the styles for HTML elements.`,
+                details: `Common properties include:
+           - 'color' (text color)
+           - 'font-size' (text size)
+           - 'margin' (space around elements)
+           - 'padding' (space inside elements)
+           - 'background-color' (element background color)`,
+                code: `p {
+         color: #333;
+         font-size: 14px;
+         margin: 10px;
+         padding: 5px;
+         background-color: #f0f0f0;
+       }`,
+                exampleHTML: `<p style="color: #333; font-size: 14px; margin: 10px; padding: 5px; background-color: #f0f0f0;">Styled Paragraph</p>`,
+            },
+            values: {
+                title: "Values",
+                description: `CSS values specify the size, color, or quantity of a CSS property.`,
+                details: `Values can be:
+           - Absolute (e.g., '10px', '#ff0000')
+           - Relative (e.g., '50%', 'em')
+           - Keywords (e.g., 'auto', 'inherit')`,
+                code: `p {
+         font-size: 1.2em; /* Relative value */
+         margin: auto; /* Keyword value */
+         color: rgba(0, 0, 0, 0.5); /* Absolute value */
+       }`,
+                exampleHTML: `<p style="font-size: 1.2em; margin: auto; color: rgba(0, 0, 0, 0.5);">Paragraph with values</p>`,
+            },
+            "box-model": {
+                title: "Box Model",
+                description: `The CSS box model describes the rectangular boxes that are generated for elements in the document tree and used in layout.`,
+                details: `The box model consists of:
+           - Content (text, images)
+           - Padding (space around content)
+           - Border (visible border around padding)
+           - Margin (space around the border)`,
+                code: `.element {
+         width: 200px;
+         height: 100px;
+         padding: 20px;
+         border: 1px solid black;
+         margin: 10px;
+       }`,
+                exampleHTML: `<div style="width: 200px; height: 100px; padding: 20px; border: 1px solid black; margin: 10px;">Box Model Example</div>`,
+            },
+            layout: {
+                title: "Layout",
+                description: "CSS layout controls the position of elements on a webpage.",
+                details: `Common layout techniques include:
+           - 'display' property (e.g., 'block', 'inline', 'inline-block', 'flex', 'grid')
+           - 'float' property
+           - Positioning (e.g., 'relative', 'absolute', 'fixed')`,
+                code: `.container {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+       }
+
+       .item {
+         float: left;
+       }`,
+                exampleHTML: `<div class="container" style="display: flex; justify-content: center; align-items: center; height: 100px;"><div class="item" style="float: left;">Item 1</div><div class="item" style="float: left;">Item 2</div></div>`,
+            },
+            flexbox: {
+                title: "Flexbox",
+                description: "CSS Flexbox is a one-dimensional layout module that provides a flexible and efficient way to align and distribute space among items in a container.",
+                details: `Flexbox properties include:
+           - 'display: flex' to create a flex container
+           - 'flex-direction' (row, column)
+           - 'justify-content' (align items horizontally)
+           - 'align-items' (align items vertically)`,
+                code: `.flex-container {
+         display: flex;
+         flex-direction: row;
+         justify-content: center;
+         align-items: center;
+       }`,
+                exampleHTML: `<div class="flex-container" style="display: flex; flex-direction: row; justify-content: center; align-items: center; height: 100px;"><div style="margin: 10px;">Item 1</div><div style="margin: 10px;">Item 2</div></div>`,
+            },
+            grid: {
+                title: "Grid",
+                description: "CSS Grid Layout is a two-dimensional layout system that allows you to create complex grid-based designs.",
+                details: `Grid properties include:
+           - 'display: grid' to create a grid container
+           - 'grid-template-columns' (define column sizes)
+           - 'grid-template-rows' (define row sizes)
+           - 'grid-gap' (define gaps between grid items)`,
+                code: `.grid-container {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         grid-gap: 10px;
+       }
+
+       .grid-item {
+         padding: 20px;
+         background-color: #f0f0f0;
+       }`,
+                exampleHTML: `<div class="grid-container" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px;"><div class="grid-item" style="padding: 20px; background-color: #f0f0f0;">Item 1</div><div class="grid-item" style="padding: 20px; background-color: #f0f0f0;">Item 2</div><div class="grid-item" style="padding: 20px; background-color: #f0f0f0;">Item 3</div></div>`,
+            },
+            positioning: {
+                title: "Positioning",
+                description: "CSS positioning controls how elements are positioned on a page.",
+                details: `Common position values include:
+           - 'static' (default)
+           - 'relative' (position relative to its normal position)
+           - 'absolute' (position relative to its nearest positioned ancestor)
+           - 'fixed' (position relative to the viewport)`,
+                code: `.element {
+         position: absolute;
+         top: 50px;
+         left: 100px;
+       }`,
+                exampleHTML: `<div style="position: relative; height: 200px; border: 1px solid #ccc;"><div class="element" style="position: absolute; top: 50px; left: 100px; background-color: #f0f0f0; padding: 10px;">Positioned Element</div></div>`,
+            },
+            margin: {
+                title: "Margin",
+                description: "CSS margin creates space around elements, outside of any defined borders.",
+                details: `Margin can be applied to all four sides of an element or individually using:
+           - 'margin-top'
+           - 'margin-right'
+           - 'margin-bottom'
+           - 'margin-left'`,
+                code: `.element {
+         margin: 10px 20px 30px 40px; /* Top Right Bottom Left */
+       }`,
+                exampleHTML: `<div class="element" style="margin: 10px 20px 30px 40px; background-color: #f0f0f0; padding: 10px;">Element with Margin</div>`,
+            },
+            padding: {
+                title: "Padding",
+                description: "CSS padding creates space inside elements, between the content and the border.",
+                details: `Padding can be applied to all four sides of an element or individually using:
+           - 'padding-top'
+           - 'padding-right'
+           - 'padding-bottom'
+           - 'padding-left'`,
+                code: `.element {
+         padding: 10px 20px 30px 40px; /* Top Right Bottom Left */
+       }`,
+                exampleHTML: `<div class="element" style="padding: 10px 20px 30px 40px; background-color: #f0f0f0;">Element with Padding</div>`,
+            },
+            borders: {
+                title: "Borders",
+                description: "CSS borders add a visual line around elements, between the padding and the margin.",
+                details: `Border properties include:
+           - 'border-width'
+           - 'border-style' (e.g., 'solid', 'dashed', 'dotted')
+           - 'border-color'`,
+                code: `.element {
+         border: 2px solid #333;
+       }`,
+                exampleHTML: `<div class="element" style="border: 2px solid #333; padding: 10px;">Element with Border</div>`,
+            },
+            typography: {
+                title: "Typography",
+                description: "CSS typography controls the appearance of text on a webpage.",
+                details: `Common typography properties include:
+           - 'font-family' (font type)
+           - 'font-size' (text size)
+           - 'font-weight' (boldness)
+           - 'color' (text color)
+           - 'line-height' (vertical spacing)`,
+                code: `p {
+         font-family: 'Arial', sans-serif;
+         font-size: 16px;
+         font-weight: normal;
+         color: #333;
+         line-height: 1.5;
+       }`,
+                exampleHTML: `<p style="font-family: 'Arial', sans-serif; font-size: 16px; font-weight: normal; color: #333; line-height: 1.5;">Styled Paragraph</p>`,
+            },
+            colors: {
+                title: "Colors",
+                description: "CSS colors are used to set the color of text, backgrounds, and other elements.",
+                details: `Colors can be specified using:
+           - Hex codes (e.g., '#ff0000')
+           - RGB values (e.g., 'rgb(255, 0, 0)')
+           - RGBA values (e.g., 'rgba(255, 0, 0, 0.5)')
+           - Named colors (e.g., 'red', 'blue')`,
+                code: `.element {
+         color: #333; /* Hex code */
+         background-color: rgba(255, 255, 255, 0.7); /* RGBA value */
+       }`,
+                exampleHTML: `<div class="element" style="color: #333; background-color: rgba(255, 255, 255, 0.7); padding: 10px;">Colored Element</div>`,
+            },
+            backgrounds: {
+                title: "Backgrounds",
+                description: "CSS backgrounds are used to set the background of HTML elements, including color, images, and gradients.",
+                details: `Background properties include:
+           - 'background-color'
+           - 'background-image'
+           - 'background-repeat'
+           - 'background-position'
+           - 'background-size'`,
+                code: `.element {
+         background-color: #f0f0f0;
+         background-image: url("image.jpg");
+         background-repeat: no-repeat;
+         background-position: center;
+       }`,
+                exampleHTML: `<div class="element" style="background-color: #f0f0f0; padding: 10px; width: 200px; height: 100px;">Background Element</div>`,
+            },
+            transitions: {
+                title: "Transitions",
+                description: "CSS transitions allow you to smoothly change CSS property values over a specified duration.",
+                details: `Transition properties include:
+           - 'transition-property' (the property to transition)
+           - 'transition-duration' (the duration of the transition)
+           - 'transition-timing-function' (the speed curve)`,
+                code: `.element {
+         background-color: #3498db;
+         transition: background-color 0.3s ease;
+       }
+
+       .element:hover {
+         background-color: #2980b9;
+       }`,                exampleHTML: `<div class="element" style="background-color: #3498db; transition: background-color 0.3s ease; padding: 10px; width: 100px; text-align: center;">Hover Me</div>`,
+            },
+            animations: {
+                title: "Animations",
+                description: "CSS animations allow you to animate HTML elements without using JavaScript.",
+                details: `Animation properties include:
+           - 'animation-name' (the name of the keyframes)
+           - 'animation-duration'
+           - 'animation-timing-function'
+           - 'animation-iteration-count'`,
+                code: `.element {
+         animation-name: slidein;
+         animation-duration: 2s;
+         animation-iteration-count: infinite;
+       }
+
+       @keyframes slidein {
+         from {
+           margin-left: 100%;
+         }
+         to {
+           margin-left: 0%;
+         }
+       }`,
+                exampleHTML: `<div class="element" style="animation-name: slidein; animation-duration: 2s; animation-iteration-count: infinite; width: 100px; height: 50px; background-color: #f0f0f0;">Animated Element</div>`,
+            },
+            "media-queries": {
+                title: "Media Queries",
+                description: "CSS media queries allow you to apply different styles based on characteristics of the device, such as screen size or orientation.",
+                details: `Common media query properties include:
+           - 'max-width' (screen width)
+           - 'min-width'
+           - 'orientation' (portrait/landscape)`,
+                code: `@media (max-width: 768px) {
+         body {
+           font-size: 14px;
+         }
+       }`,
+                exampleHTML: `<p>This text will change size based on screen width due to a media query.</p>`,
+            },
+            specificity: {
+                title: "Specificity",
+                description: "CSS specificity determines which CSS rule takes precedence when multiple rules apply to the same element.",
+                details: `Specificity is calculated based on:
+           - Inline styles
+           - IDs
+           - Classes, attributes, and pseudo-classes
+           - Elements and pseudo-elements`,
+                code: `/* Inline style (highest specificity) */
+       <p style="color: red;">This text is red.</p>
+
+       /* ID selector */
+       #my-id {
+         color: blue; /* Overrides class selector */
+       }
+
+       /* Class selector */
+       .my-class {
+         color: green;
+       }
+
+       /* Element selector (lowest specificity) */
+       p {
+         color: black;
+       }`,
+                exampleHTML: `<p style="color: red;" id="my-id" class="my-class">This text demonstrates CSS specificity.</p>`,
+            },
+            cascade: {
+                title: "Cascade",
+                description: "The CSS cascade determines the order in which CSS rules are applied when multiple styles apply to the same element.",
+                details: `The cascade considers:
+           - Importance (e.g., '!important' rule)
+           - Specificity
+           - Source order (rules defined later in the stylesheet override earlier rules)`,
+                code: `/* Using !important to override other styles */
+       p {
+         color: black !important;
+       }
+
+       /* This rule will override the previous one due to source order */
+       p {
+         color: blue;
+       }`,
+                exampleHTML: `<p style="color: red !important;">This text demonstrates CSS cascade.</p>`,
+            },
+            "pseudo-classes": {
+                title: "Pseudo-classes",
+                description: "CSS pseudo-classes are keywords added to selectors that specify a special state of the selected element(s).",
+                details: `Common pseudo-classes include:
+           - ':hover' (when the mouse hovers over an element)
+           - ':active' (when the element is being clicked)
+           - ':focus' (when the element is focused)`,
+                code: `a:hover {
+         color: red;
+       }
+
+       button:active {
+         transform: scale(0.95);
+       }`,
+                exampleHTML: `<a href="#" style="display: inline-block; padding: 10px; background-color: #f0f0f0;">Hover me</a><br><button style="padding: 10px; background-color: #f0f0f0;">Click me</button>`,
+            },
+            "pseudo-elements": {
+                title: "Pseudo-elements",
+                description: "CSS pseudo-elements allow you to style specific parts of an element, rather than the whole element.",
+                details: `Common pseudo-elements include:
+           -'::before' (insert content before the element)
+           - '::after' (insert content after the element)
+           - '::first-line' (style the first line of a block-level element)`,
+                code: `p::first-line {
+         font-weight: bold;
+       }
+
+       .element::before {
+         content: "▶"; /* Insert a symbol before the element */
+       }`,
+                exampleHTML: `<p>This is a paragraph with <span style="font-weight: bold;">bold</span> first line.</p><div class="element" style="padding: 10px;">Pseudo Element Example</div>`,
+            },
+        };
+
+        const sidebar = document.querySelector('.sidebar');
+        const listItems = document.querySelectorAll('.sidebar ul li');
+        const menuDriveButton = document.querySelector('.menu-drive-button');
+        let currentTopicId = 'selectors'; // Store the current topic ID
+        const body = document.body;
+        const themeToggle = document.querySelector('.theme-toggle');
+
+        // Function to load the current topic
+        function loadCurrentTopic() {
+            loadTopic(currentTopicId);
+        }
+
+        // Function to collapse the sidebar
+        function collapseSidebar() {
+            sidebar.classList.remove('active');
+            menuDriveButton.classList.remove('active'); // Ensure the menu button also reflects the collapsed state
+
+            // Reset the menu button's content based on the collapsed state
+            menuDriveButton.textContent = ''; // Remove text
+        }
+
+        // Function to load a topic based on its ID
+        function loadTopic(topicId) {
+            const topic = topics[topicId];
+            const contentDiv = document.getElementById("content");
+            const codeExampleDiv = document.getElementById("code-example");
+            const titleDiv = document.getElementById("topic-title");
+
+            if (topic) {
+                titleDiv.textContent = topic.title;
+                contentDiv.innerHTML = `
+       <div class="definition fade-in">
+         <p>${topic.description}</p>
+         ${topic.details ? `<p>${topic.details}</p>` : ''}
+       </div>
+     `;
+
+                codeExampleDiv.innerHTML = topic.code ? `
+         <div class="code-box fade-in">
+           <textarea id="code-${topicId}" class="code-editor">${topic.code}</textarea>
+            <button onclick="runCSS('${topicId}')">Run</button>
+         <div class="output" id="output-${topicId}"></div>
+         </div>
+       ` : "<p>No code example available for this topic.</p>";
+
+                currentTopicId = topicId; // Update the current topic ID
+            } else {
+                contentDiv.innerHTML = `<p>Topic not found.</p>`;
+                codeExampleDiv.innerHTML = ""; // Clear code example if topic not found
+            }
+
+            // Collapse the sidebar after loading a topic (optional)
+            if (window.innerWidth <= 768) {
+                collapseSidebar();
+            }
+
+            // Update the active state in the sidebar
+            updateActiveState(topicId);
+        }
+
+        // Function to run CSS code and display the output
+        function runCSS(topicId) {
+            const topic = topics[topicId];
+            if (!topic || !topic.code) {
+                console.error(`Topic or code not found for ID: ${topicId}`);
+                return;
+            }
+
+            const code = document.getElementById(`code-${topicId}`).value;
+            const outputDiv = document.getElementById(`output-${topicId}`);
+
+            if (!outputDiv) {
+                console.error(`Output div not found for ID: ${topicId}`);
+                return;
+            }
+
+            let exampleHTML = topic.exampleHTML || "<p>No example provided.</p>";
+
+            // Create a temporary iframe to isolate the styles
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none'; // Hide the iframe
+
+            document.body.appendChild(iframe); // Append to the body
+
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDocument.body.innerHTML = exampleHTML;
+
+            // Create style element
+            const style = iframeDocument.createElement('style');
+            style.textContent = code;
+
+            // Append style to iframe's head
+            iframeDocument.head.appendChild(style);
+
+            outputDiv.innerHTML = iframeDocument.body.innerHTML;
+
+            // Clean up the iframe
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 500);
+        }
+
+        // Event listeners for sidebar navigation links
+        listItems.forEach(item => {
+            const link = item.querySelector('a');
+            if (link) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const topicId = link.getAttribute('data-topic');
+
+                    // Load the new topic and update the sidebar active state
+                    loadTopic(topicId);
+                });
+            }
+        });
+
+        function updateActiveState(topicId) {
+            // Remove 'active' class from all items first
+            listItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add 'active' class to the selected item
+            listItems.forEach(item => {
+                const link = item.querySelector('a');
+                if (link && link.getAttribute('data-topic') === topicId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            menuDriveButton.classList.toggle('active');
+        }
+
+        // Theme Toggle Logic
+        themeToggle.addEventListener('change', (event) => {
+            if (event.target.value === 'dark') {
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+            }
+        });
+
+        // Initial topic load when the page loads
+        loadCurrentTopic();
+    </script>
+</body>
+
+</html>
