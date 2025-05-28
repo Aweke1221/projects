@@ -1,0 +1,103 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Linear gradient background */
+    color: #fff; /* Set default text color to white or a light color */
+    margin: 0;
+    overflow: hidden; /* Hide scrollbars */
+}
+
+.calculator {
+    width: 320px;
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    backdrop-filter: blur(10px); /* Adds a frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Adds a subtle border */
+}
+
+.display {
+    padding: 20px;
+    text-align: right;
+}
+
+.history {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
+    min-height: 1.2em;
+    overflow-wrap: break-word;  /* Handle long history entries */
+}
+
+#result {
+    width: 100%;
+    font-size: 2.2em;
+    border: none;
+    background-color: transparent;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    color: #fff; /* Result display color */
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+}
+
+button {
+    background-color: rgba(255, 255, 255, 0.05); /* Transparent button background */
+    border: none;
+    font-size: 1.2em;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+button:active {
+    transform: translateY(1px); /* Subtle push on click */
+}
+
+.operator, .scientific, .comparison {
+    color: #ddd;
+}
+
+.equals {
+    background-color: #4CAF50;
+}
+
+.equals:hover {
+    background-color: #43A047;
+}
+
+.clear {
+    background-color: #f44336;
+}
+
+.clear:hover {
+    background-color: #d32f2f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .calculator {
+        width: 95%;
+    }
+    button {
+        padding: 12px;
+        font-size: 1em;
+    }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <div class="history" id="history"></div>
+            <input type="text" id="result" readonly>
+        </div>
+
+        <div class="buttons">
+            <!-- Row 1 -->
+            <button class="clear">C</button>
+            <button class="operator">(</button>
+            <button class="operator">)</button>
+            <button class="operator">/</button>
+
+            <!-- Row 2 -->
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button class="operator">*</button>
+
+            <!-- Row 3 -->
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button class="operator">-</button>
+
+            <!-- Row 4 -->
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button class="operator">+</button>
+
+            <!-- Row 5 -->
+            <button>0</button>
+            <button>.</button>
+            <button class="equals">=</button>
+
+            <!-- Scientific Operations -->
+            <button class="scientific">sin</button>
+            <button class="scientific">cos</button>
+            <button class="scientific">tan</button>
+            <button class="scientific">log</button>
+            <button class="scientific">ln</button>
+            <button class="scientific">sqrt</button>
+            <button class="scientific">x^y</button>
+            <button class="scientific">n!</button>
+
+            <!-- Comparison Operators -->
+            <button class="comparison">==</button>
+            <button class="comparison">!=</button>
+            <button class="comparison">></button>
+            <button class="comparison"><</button>
+            <button class="comparison">>=</button>
+            <button class="comparison"><=</button>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
