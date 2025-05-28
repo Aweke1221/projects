@@ -1,0 +1,72 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #f0f0f0;
+  transition: background-color 0.5s; /* Add transition for smooth color change */
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 100px); /* 4 columns */
+  grid-gap: 10px;
+  margin: 20px auto;
+  width: 440px; /* Adjust width to fit cards and gap */
+}
+
+.card {
+  width: 100px;
+  height: 150px;
+  background-color: white; /* Make cards white */
+  border: 1px solid #999;
+  border-radius: 10px; /* Rounder corners for card look */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+  transition: transform 0.3s;
+  transform-style: preserve-3d; /* Required for flipping */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+  background-color: #eee; /* Change color when flipped */
+}
+
+.card.matched {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.card-back {
+  position: absolute;
+  width: 100px;
+  height: 150px;
+  background-color: white;
+  border: 1px solid #999;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  transform: rotateY(180deg);
+}
+
+.score-container {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+#playAgainButton {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
