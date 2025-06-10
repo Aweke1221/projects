@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Print Page Example</title>
+  <style>
+    @media print {
+      #c {
+        display: none;
+      }
+    }
+
+    .warning {
+      color: red;
+    }
+
+    #strengz {
+      border: none;
+    }
+
+    .container {
+      width: 70%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .label-value {
+      margin-bottom: 10px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<h1>Diredawa university institute of technology</h1>
+<div>
+<form>
+<fieldset>
+
+<div class="container">
+  <div class="label-value">
+    <span class="label">Admission Classification:</span> Regular
+  </div>
+
+  <div class="label-value">
+    <span class="label">Date:</span> 2024/2025
+  </div>
+
+  <div class="label-value">
+    <span class="label">Program:</span> Degree
+  </div>
+
+  <div class="label-value">
+    <span class="label">Year:</span> 2
+  </div>
+
+  <div class="label-value">
+    <span class="label">Semester:</span> ||
+  </div>
+</div>
+<legend><h2>Grade Report</h2></legend>
+Student name:<input type="text" id="text" style="border-top: none; border-left: none; border-right:none"><br>
+Student ID:<input type="text" id="text" style="border-top: none; border-left: none; border-right:none"><br>
+Department:<input type="text" id="text" style="border-top: none; border-left: none; border-right:none"><br><br>
+<table border="2px">
+  <tr>
+    <th>Course Title</th>
+    <th>Credit</th>
+    <th>Total 100%</th>
+    <th>Number Grade</th>
+    <th>Letter Grade</th>
+    <th>Grade Point</th>
+  </tr>
+
+  <tr>
+    <td>Operating System</td>
+    <td>5</td>
+    <td> <input type="number" class="total"> </td>
+    <td class="Numgarde"></td>
+    <td class="Letgrade"></td>
+    <td class="Gradepoint"></td>
+  </tr>
+
+  <tr>
+    <td>Computer Organization</td>
+    <td>5</td>
+    <td> <input type="number" class="total"> </td>
+    <td class="Numgarde"></td>
+    <td class="Letgrade"></td>
+    <td class="Gradepoint"></td>
+  </tr>
+
+  <tr>
+    <td>Data Communication and Networking</td>
+    <td>5</td>
+    <td> <input type="number" class="total"> </td>
+    <td class="Numgarde"></td>
+    <td class="Letgrade"></td>
+    <td class="Gradepoint"></td>
+  </tr>
+
+  <tr>
+    <td>Discrete Mathematics</td>
+    <td>5</td>
+    <td> <input type="number" class="total"> </td>
+    <td class="Numgarde"></td>
+    <td class="Letgrade"></td>
+    <td class="Gradepoint"></td>
+  </tr>
+
+  <tr>
+    <td>Internet Programming</td>
+    <td>5</td>
+    <td> <input type="number" class="total"> </td>
+    <td class="Numgarde"></td>
+    <td class="Letgrade"></td>
+    <td class="Gradepoint"></td>
+  </tr>
+  <tr>
+    <td>Data Structure and Algorithms</td>
+    <td>5</td>
+    <td> <input type="number" class="total"> </td>
+    <td class="Numgarde"></td>
+    <td class="Letgrade"></td>
+    <td class="Gradepoint"></td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td class="cred"></td>
+    <td colspan="3"></td>
+    <td class="totgp"></td>
+
+  </tr>
+</table><br>
+<table border="2px">
+  <tr>
+    <th>Summary</th>
+    <th>Credit</th>
+    <th>GP</th>
+    <th>GPA</th>
+    <th>ALG</th>
+  </tr>
+  <tr>
+    <td>Previous credit</td>
+    <td class="prevCred"></td>
+    <td> <input type="number" id="prevGP" value="0"> </td>
+    <td class="prevAvg"></td>
+    <td class="prvALG"></td>
+  </tr>
+  <tr>
+    <td>Semester Total</td>
+    <td class="semCred"></td>
+    <td class="semGP"></td>
+    <td class="semAvg"></td>
+    <td class="semALG"></td>
+  </tr>
+  <tr>
+    <td>Cumulative</td>
+    <td class="cumCred"></td>
+    <td class="cumGP"></td>
+    <td class="cumAvg"></td>
+    <td class="cumALG"></td>
+  </tr>
+</table>
+<div class="str">
+<input type="text" id="strengz" data-rank="1">First class with Great Distinction<br>
+<input type="text" id="strengz" data-rank="2">First Class with Distinction<br>
+<input type="text" id="strengz" data-rank="3">First Class<br>
+<input type="text" id="strengz" data-rank="4">Second Class<br>
+<input type="text" id="strengz" data-rank="5">Lower Class<br>
+<input type="text" id="strengz" data-rank="6">Lowest Class<br>
+<input type="text" id="strengz" data-rank="7">Pass<br>
+<input type="text" id="strengz" data-rank="8">Academic Warning<br>
+<input type="text" id="strengz" data-rank="9">Academic Forced Withdrawal<br>
+<input type="text" id="strengz" data-rank="10">Academic Dismissal<br>
+<input type="text" id="strengz" data-rank="11">Complete Academic Dismissal<br>
+</div>
+<h3><u>Registrar Recorder</u></h3><br>
+<b>signature:</b>__________________<br>
+<b>Name:</b>
+<input type="text" name="" style="border-top: none; border-left: none; border-right:none"><br>
+<script>
+  const ken = new Date();
+  const day = ken.getDate();
+  const month = ken.getMonth() + 1; // Months are 0-indexed
+  const year = ken.getFullYear();
+
+  const formattedDate = day + "/" + month + "/" + year;
+  document.write("<b>Date:</b>"+formattedDate);
+</script>
+</fieldset>
+</form>
+<button onclick="calculate()">Calculate</button>
+</div>
+<button onclick="window.print()">Print this page</button>
+<script type="text/javascript">
+  var creditHours = 5; // Renamed for clarity and consistency
+
+  function calculate() {
+    // Grading scale
+    const gradingScale = {
+      90: { gradePoint: 4, letterGrade: 'A', rank: 1},
+      84.5: { gradePoint: 3.7, letterGrade: 'A-', rank: 2 },
+      79.5: { gradePoint: 3.5, letterGrade: 'B+', rank: 3 },
+      74.5: { gradePoint: 3, letterGrade: 'B', rank: 4 },
+      69.5: { gradePoint: 2.7, letterGrade: 'B-', rank: 5 },
+      64.5: { gradePoint: 2.3, letterGrade: 'C+', rank: 6 },
+      59.5: { gradePoint: 2, letterGrade: 'C', rank: 7 },
+      49.5: { gradePoint: 1, letterGrade: 'D', rank: 8 },
+      0: { gradePoint: 0, letterGrade: 'F', rank: 9 }
+    };
+
+    // Get all input elements with the class 'total'
+    let totalInputs = document.querySelectorAll('.total');
+    let totalGradePoints = 0;  // Initialize total grade points
+    let totalCredits = 0;       // Initialize total credits
+
+    // Loop through each input element
+    totalInputs.forEach((input, index) => {
+      let score = parseFloat(input.value);
+      let numGradeElement = document.querySelectorAll('.Numgarde')[index];
+      let letterGradeElement = document.querySelectorAll('.Letgrade')[index];
+      let gradePointElement = document.querySelectorAll('.Gradepoint')[index];
+      let credit = parseInt(document.querySelectorAll('tr')[index + 1].querySelector('td:nth-child(2)').textContent);
+      let gradePoint = 0;
+      let letterGrade = "NG"; // Default
+
+      // Find grade based on score
+      for (let threshold in gradingScale) {
+        if (score >= threshold) {
+          gradePoint = gradingScale[threshold].gradePoint;
+          letterGrade = gradingScale[threshold].letterGrade;
+          rank = gradingScale[threshold].rank;
+          break; // Exit loop after finding grade
+        }
+      }
+      //Set to 0 if no grade point is assigned
+      if (letterGrade == "NG") {
+            gradePoint = 0;
+          }
+
+      numGradeElement.textContent = gradePoint;
+      letterGradeElement.textContent = letterGrade;
+      gradePointElement.textContent = gradePoint * credit;
+
+      totalGradePoints += gradePoint * credit; // Add to total
+      totalCredits += credit;  // Add to total credits
+
+    });
+
+    // Display the totals in the first table
+    document.querySelector('.cred').textContent = totalCredits;
+    document.querySelector('.totgp').textContent = totalGradePoints;
+
+    // Calculations for the second table (Summary)
+    const prevCredits = 94; //hardcoded as requested
+    const prevGPInput = document.getElementById('prevGP');
+    const prevGP = parseFloat(prevGPInput.value) || 0;
+
+    const semesterCredits = totalCredits;
+    const semesterGP = totalGradePoints;
+
+    const cumulativeCredits = prevCredits + semesterCredits;
+    const cumulativeGPA = (prevGP + semesterGP) / cumulativeCredits;
+
+    const semesterGPA = semesterGP / semesterCredits || 0;
+
+    // Displaying the results in the second table
+    document.querySelector('.prevCred').textContent = prevCredits;
+    document.querySelector('.semCred').textContent = semesterCredits;
+
+    document.querySelector('.semGP').textContent = semesterGP.toFixed(2);
+    document.querySelector('.semAvg').textContent = semesterGPA.toFixed(2); //Fixed, now displays cumulative GPA
+
+    document.querySelector('.cumCred').textContent = cumulativeCredits;
+    document.querySelector('.cumGP').textContent = cumulativeGP.toFixed(2); // Cumulative total grade points
+    document.querySelector('.cumAvg').textContent = cumulativeGPA.toFixed(2); //Cumulative GPA
+
+    //Automated input writing
+    const rankInputs = document.querySelectorAll('#strengz');
+
+    // Clear all inputs first
+    rankInputs.forEach(input => input.value = '');
+
+    if (cumulativeGPA && cumulativeCredits > 0) { //Only perform if a cmltv GPA has been created
+        if (cumulativeAverage){
+            for (let threshold in gradingScale) {
+              console.log(`Rank: ${gradingscale[threshold].rank}`);
+                console.log(gradingScale[threshold]);
+                    if (rank > 0 && rank < 8){
+                        let rankToX = 0;
+                        rankInputs.forEach(input => {
+                            if (input.dataset.rank <= 7) {
+                                rankToX = 1;
+                                input.value = 'X';
+                                if (rankToX) return;
+                            }
+                        });
+                    }
+                    if (rank >= 8){
+                        rankInputs.forEach(input => {
+                            if (input.dataset.rank >= 8) {
+                                input.value = 'X';
+                            }
+                        });
+                    }
+                break; //break once you have completed writing all x's
+            }
+        }
+     }
+  }
+</script>
+</body>
+</html>
